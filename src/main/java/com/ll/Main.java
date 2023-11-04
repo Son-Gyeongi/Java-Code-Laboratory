@@ -13,7 +13,7 @@ class Solution {
     public int solution(int n) {
         int answer = 0;
         int pizza = 7; // 피자 일곱 조각
-        int mok = 0; // 나눈 나머지값
+        int mok = 0; // 나눈 값의 몫
 
         /*
         1~7 / 1
