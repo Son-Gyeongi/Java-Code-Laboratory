@@ -5,24 +5,25 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[] arr = new int[]{1, 2, 3, 4, 5};
-
-        for (int a : s.solution(arr)) {
-            System.out.println(a);
-        }
+        System.out.println(s.solution(56));
     }
 }
 
 class Solution {
-    public int[] solution(int[] num_list) {
-        int[] answer = new int[]{0,0};
+    public int solution(int n) {
+        int answer = 0;
+        int pizza = 7; // 피자 일곱 조각
+        int mok = 0; // 나눈 나머지값
 
-        for (int num : num_list) {
-            if (num % 2 == 0) {
-                answer[0]++;
-            } else {
-                answer[1]++;
-            }
+        /*
+        1~7 / 1
+        8~14 / 2
+        15~ 21 /3
+         */
+        while (mok < 1) {
+            mok = pizza/n;
+            answer++;
+            pizza += 7;
         }
 
         return answer;

@@ -1,21 +1,14 @@
 package com.ll.date20231104;
 
-import java.io.FileWriter;
-import java.io.IOException;
-
+// 저장된 파일을 불러와서 담길 객체
 public class FileTest {
-    public static void main(String[] args) {
-        String fileName = "example.txt";
-        String content = "파일에 저장될 내용입니다.";
+    int id;
+    String authorNmae;
+    String content;
 
-        try {
-            FileWriter writer = new FileWriter(fileName);
-            writer.write(content);
-            writer.close();
-            System.out.println("파일이 성공적으로 저장되었습니다.");
-        } catch (IOException e) {
-            System.out.println("파일 저장 중 오류가 발생했습니다.");
-            e.printStackTrace();
-        }
+    public FileTest(int id, String authorNmae, String content) {
+        this.id = id;
+        this.authorNmae = authorNmae;
+        this.content = content;
     }
 }
