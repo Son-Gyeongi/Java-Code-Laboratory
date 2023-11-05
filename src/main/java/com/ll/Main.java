@@ -5,27 +5,13 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.solution(56));
+        System.out.println(s.solution(4,12));
     }
 }
 
 class Solution {
-    public int solution(int n) {
-        int answer = 0;
-        int pizza = 7; // 피자 일곱 조각
-        int mok = 0; // 나눈 값의 몫
-
-        /*
-        1~7 / 1
-        8~14 / 2
-        15~ 21 /3
-         */
-        while (mok < 1) {
-            mok = pizza/n;
-            answer++;
-            pizza += 7;
-        }
-
-        return answer;
+    public int solution(int slice, int n) {
+        // slice : 사람 수, n : 조각 수
+        return (n % slice == 0) ? n / slice : n / slice + 1;
     }
 }
