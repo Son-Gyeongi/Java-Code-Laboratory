@@ -5,20 +5,15 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.solution(4));
+        System.out.println(s.solution("BCBdbe", "B"));
     }
 }
 
 class Solution {
-    public int solution(int n) {
-        int answer = 0;
-        int pizza = 6; // 피자 조각
+    public String solution(String my_string, String letter) {
+        String answer = "";
 
-        while (true) {
-            answer = pizza / n >= 0 ? ++answer : answer;
-            if (pizza % n == 0) break;
-            pizza += 6;
-        }
+        answer = my_string.replace(letter, "");
 
         return answer;
     }
