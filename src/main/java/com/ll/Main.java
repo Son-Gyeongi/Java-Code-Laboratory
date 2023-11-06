@@ -5,13 +5,21 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.solution(4,12));
+        System.out.println(s.solution(4));
     }
 }
 
 class Solution {
-    public int solution(int slice, int n) {
-        // slice : 사람 수, n : 조각 수
-        return (n % slice == 0) ? n / slice : n / slice + 1;
+    public int solution(int n) {
+        int answer = 0;
+        int pizza = 6; // 피자 조각
+
+        while (true) {
+            answer = pizza / n >= 0 ? ++answer : answer;
+            if (pizza % n == 0) break;
+            pizza += 6;
+        }
+
+        return answer;
     }
 }
