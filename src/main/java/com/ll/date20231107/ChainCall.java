@@ -1,5 +1,6 @@
 package com.ll.date20231107;
 
+// 체인호출
 public class ChainCall {
     public static void main(String[] args) {
         Article article = new Article();
