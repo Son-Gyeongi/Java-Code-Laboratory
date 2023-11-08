@@ -5,29 +5,22 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.solution(20));
+        String[] arr1 = {"a", "b", "c"};
+        String[] arr2 = {"com", "b", "d", "p", "c"};
+        System.out.println(s.solution(arr1, arr2));
     }
 }
 
 class Solution {
-    public int solution(int n) {
+    public int solution(String[] s1, String[] s2) {
         int answer = 0;
-        int cnt = 0;
 
-        // 제곱근 구하기
-        int result = (int) Math.sqrt(n);
-
-        for (int i = 0; i <= result; i++) {
-            for (int j = n; j > 0; j--) {
-                if (i * j == n) {
-                    cnt++;
+        for (int i = 0; i < s1.length; i++) {
+            for (int j = 0; j < s2.length; j++) {
+                if (s1[i].equals(s2[j])) {
+                    answer++;
                 }
             }
-        }
-        answer = answer+(cnt*2);
-
-        if (Math.pow(result, 2) == n) {
-            answer--;
         }
 
         return answer;
