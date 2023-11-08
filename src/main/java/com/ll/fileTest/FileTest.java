@@ -1,4 +1,4 @@
-package com.ll.date20231104;
+package com.ll.fileTest;
 
 // 저장된 파일을 불러와서 담길 객체
 public class FileTest {

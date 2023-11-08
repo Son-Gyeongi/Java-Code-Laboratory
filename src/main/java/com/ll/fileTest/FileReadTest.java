@@ -1,8 +1,7 @@
-package com.ll.date20231104;
+package com.ll.fileTest;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 
 public class FileReadTest {
