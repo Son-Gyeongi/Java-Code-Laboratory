@@ -2,24 +2,22 @@ package com.ll;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(Arrays.toString(s.solution(15)));
+        System.out.println(s.solution("aAb1B2cC34oOp"));
     }
 }
 
 class Solution {
-    public int[] solution(int n) {
-        int length = n % 2 == 0 ? n / 2 : n / 2 + 1;
-        int[] answer = new int[length];
+    public int solution(String my_string) {
+        String tmp = my_string.replaceAll("[A-Z, a-z]", ""); // "1234"
 
-        int j = 0;
-        for (int i = 0; i < answer.length ; i++) {
-            ++j;
-            answer[i] = i + j;
-        }
+        int answer = tmp.chars()
+                .map(Character::getNumericValue)
+                .sum();
 
         return answer;
     }
