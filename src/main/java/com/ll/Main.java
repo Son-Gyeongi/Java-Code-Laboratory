@@ -3,12 +3,12 @@ package com.ll;
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.solution(34,3));
+        System.out.println(s.solution("abcdevwxyz"));
     }
 }
 
 class Solution {
-    public int solution(int num, int n) {
-        return num % n == 0 ? 1 : 0;
+    public String solution(String myString) {
+        return myString.replaceAll("[a-k]", "l");
     }
 }
