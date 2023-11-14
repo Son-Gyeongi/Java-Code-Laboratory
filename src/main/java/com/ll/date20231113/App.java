@@ -68,12 +68,13 @@ public class App {
         System.out.println("=== 명언 수정 ===");
 //        String idStr = cmd.replace("수정?id=", "");
         // 수정할 id를 입력받는다.
-        System.out.println("몇 번 명언을 수정하시겠습니까? : ");
+        System.out.print("몇 번 명언을 수정하시겠습니까? : ");
         String idStr = scanner.nextLine();
         int id = Integer.parseInt(idStr);
 
         if (quotationList.isEmpty()) {
             System.out.println("명언이 존재하지 않습니다.");
+            return;
         }
 
         // 실제 수정 처리
@@ -92,16 +93,18 @@ public class App {
                 quotation.setAuthorName(authorName);
 
                 System.out.println(id + "번 명언이 수정되었습니다.");
-                break;
+                return;
             }
         }
+
+        System.out.println("%d번은 존재하지 않습니다.".formatted(id));
     }
 
     void deleteQuotation(String cmd) {
         System.out.println("=== 명언 삭제 ===");
 //        String idStr = cmd.replace("삭제?id=","");
         // 삭제할 id를 입력받는다.
-        System.out.println("몇 번 명언을 삭제하시겠습니까? : ");
+        System.out.print("몇 번 명언을 삭제하시겠습니까? : ");
         String idStr = scanner.nextLine();
         int id = Integer.parseInt(idStr);
 
@@ -116,7 +119,7 @@ public class App {
             if (quotation.getId() == id) {
                 quotationList.remove(i);
                 System.out.println(id + "번 명언이 삭제되었습니다.");
-                break;
+                return;
             }
         }
 
