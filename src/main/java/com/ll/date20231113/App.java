@@ -72,10 +72,8 @@ public class App {
         String idStr = scanner.nextLine();
         int id = Integer.parseInt(idStr);
 
-        if (quotationList.isEmpty()) {
-            System.out.println("명언이 존재하지 않습니다.");
-            return;
-        }
+        // 명언이 존재하지 않는 id가 들어오면 "존재하지 않는 명언입니다."를 출력
+        if (isExist(id)) return;
 
         // 실제 수정 처리
         for (int i = 0; i < quotationList.size(); i++) {
@@ -96,8 +94,6 @@ public class App {
                 return;
             }
         }
-
-        System.out.println("%d번은 존재하지 않습니다.".formatted(id));
     }
 
     void deleteQuotation(String cmd) {
@@ -108,10 +104,8 @@ public class App {
         String idStr = scanner.nextLine();
         int id = Integer.parseInt(idStr);
 
-        if (quotationList.isEmpty()) {
-            System.out.println("명언이 존재하지 않습니다.");
-            return;
-        }
+        // 명언이 존재하지 않는 id가 들어오면 "존재하지 않는 명언입니다."를 출력
+        if (isExist(id)) return;
 
         // 실제 삭제 처리
         for (int i = 0; i < quotationList.size(); i++) {
@@ -122,7 +116,24 @@ public class App {
                 return;
             }
         }
+    }
 
-        System.out.println("%d번은 존재하지 않습니다.".formatted(id));
+    // 명언이 존재하지 않는 id가 들어오면 "존재하지 않는 명언입니다."를 출력
+    private boolean isExist(int id) {
+        boolean isExist = false;
+
+        for (int i = 0; i < quotationList.size(); i++) {
+            Quotation quotation = quotationList.get(i);
+            if (quotation.getId() == id) {
+                isExist = true;
+                break;
+            }
+        }
+
+        if (!isExist) {
+            System.out.println("존재하지 않는 명언입니다.");
+            return true;
+        }
+        return false;
     }
 }
