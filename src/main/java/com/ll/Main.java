@@ -5,13 +5,12 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.solution("PrOgRaMmErS"));
+        System.out.println(s.solution(55, 2,5));
     }
 }
 
 class Solution {
-    public String solution(String myString) {
-        // toLowerCase() : 대문자를 소문자로 바꿔준다.
-        return myString.toLowerCase().replaceAll("a", "A");
+    public int solution(int number, int n, int m) {
+        return number % n == 0 && number % m == 0 ? 1 : 0;
     }
 }
