@@ -1,17 +1,24 @@
 package com.ll;
 
-import java.util.Arrays;
-
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.solution("ProgrammerS123", 11));
+        int[] arr = {1, 2, 3, 4, 5};
+        System.out.println(s.solution(arr, 6));
     }
 }
 
 class Solution {
-    public String solution(String my_string, int n) {
-        // 문자열의 시작은 0부터 ~ n-1까지 출력이 된다.
-        return my_string.substring(0, n);
+    public int solution(int[] num_list, int n) {
+        int answer = 0;
+
+        for (int num : num_list) {
+            if (num == n) {
+                answer = 1;
+                break;
+            }
+        }
+
+        return answer;
     }
 }
