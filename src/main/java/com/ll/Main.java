@@ -6,14 +6,12 @@ import java.util.stream.Stream;
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.solution("12345"));
+        System.out.println(s.solution("aBcDeFg"));
     }
 }
 
 class Solution {
-    public int solution(String num_str) {
-        return Stream.of(num_str.split(""))
-                .mapToInt(Integer::parseInt)
-                .sum();
+    public String solution(String myString) {
+        return myString.toLowerCase();
     }
 }
