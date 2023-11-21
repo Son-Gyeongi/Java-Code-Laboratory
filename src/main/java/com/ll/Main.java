@@ -7,12 +7,12 @@ public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
         int[] arr = {2, 3, 4, 5};
-        System.out.println(s.solution(69.42));
+        System.out.println(Arrays.toString(s.solution("i love you")));
     }
 }
 
 class Solution {
-    public int solution(double flo) {
-        return (int) flo;
+    public String[] solution(String my_string) {
+        return my_string.split(" ");
     }
 }
