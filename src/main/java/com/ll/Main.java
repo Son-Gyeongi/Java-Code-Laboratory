@@ -1,29 +1,21 @@
 package com.ll;
 
-import java.util.Arrays;
+import java.util.stream.IntStream;
 
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.solution(7));
+        int[] arr = {5, 7, 8, 3};
+        System.out.println(s.solution(arr));
     }
 }
 
 class Solution {
-    public int solution(int n) {
-        int answer = 0;
+    public int solution(int[] num_list) {
+        // 모든 원소들의 곱이 모든 원소들의 합의 제곱보다 작으면 1을 크면 0을 return
+        int reduce = IntStream.of(num_list).reduce(1, (a, b) -> a * b);
+        int sum = (int) Math.pow(IntStream.of(num_list).sum(), 2);
 
-        // n이 홀수면 홀수 숫자만, 짝수면 짝수 숫자만
-        // 거르고 나서 반복해서 로직 수행
-
-        for (int i = (n % 2 == 0) ? 0 : 1; i <= n; i=i+2) {
-            if (n % 2 == 1) { // 홀수
-                answer += i;
-            } else {
-                answer += (int) Math.pow(i, 2);
-            }
-        }
-
-        return answer;
+        return reduce < sum ? 1 : 0;
     }
 }
