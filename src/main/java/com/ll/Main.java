@@ -1,21 +1,23 @@
 package com.ll;
 
+import java.util.Arrays;
+
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.solution("ABBAA", "ABAB"));
+        int[] arr = {58, 44, 27, 10, 100};
+        System.out.println(s.solution(arr, 139));
     }
 }
 
 class Solution {
-    public int solution(String myString, String pat) {
-        String strArr = "";
+    public int solution(int[] numbers, int n) {
+        int answer = 0;
 
-        for (int i = 0; i < myString.length(); i++) {
-            if (myString.charAt(i) == 'A') strArr += 'B';
-            if (myString.charAt(i) == 'B') strArr += 'A';
+        for (int i = 0; answer <= n; i++) {
+            answer += numbers[i];
         }
-        System.out.println(strArr);
-        return strArr.contains(pat) ? 1 : 0;
+
+        return answer;
     }
 }
