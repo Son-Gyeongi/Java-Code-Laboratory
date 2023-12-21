@@ -1,23 +1,26 @@
 package com.ll;
 
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        String[] strArr = {"progressive", "hamburger", "hammer", "ahocorasick"};
-        int[][] intArr = {{0, 4}, {1, 2}, {3, 5}, {7, 7}};
-        System.out.println(s.solution(strArr, intArr));
-        // 문자열들이 담긴 리스트가 주어졌을 때, 모든 문자열들을 순서대로 합친 문자열을 꼬리 문자열
+        int[] intArr = {4, 2, 6, 1, 7, 6};
+        System.out.println(Arrays.toString(s.solution(intArr, 4)));
     }
 }
 
 class Solution {
-    public String solution(String[] my_strings, int[][] parts) {
-        String answer = "";
+    public int[] solution(int[] num_list, int n) {
+        int[] answer = new int[num_list.length % n == 0 ? num_list.length / n : num_list.length / n + 1];
+        int j = 0;
 
-        for (int i = 0; i < my_strings.length; i++) {
-            answer += my_strings[i].substring(parts[i][0], parts[i][1] + 1);
+        for (int i = 0; i < num_list.length; i++) {
+            if (i % n == 0) {
+                answer[j] = num_list[i];
+                j++;
+            }
         }
 
         return answer;
