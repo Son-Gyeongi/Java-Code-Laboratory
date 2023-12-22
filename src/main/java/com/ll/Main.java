@@ -6,23 +6,12 @@ import java.util.stream.IntStream;
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[] intArr = {4, 2, 6, 1, 7, 6};
-        System.out.println(Arrays.toString(s.solution(intArr, 4)));
+        System.out.println(Arrays.toString(s.solution(15, 5)));
     }
 }
 
 class Solution {
-    public int[] solution(int[] num_list, int n) {
-        int[] answer = new int[num_list.length % n == 0 ? num_list.length / n : num_list.length / n + 1];
-        int j = 0;
-
-        for (int i = 0; i < num_list.length; i++) {
-            if (i % n == 0) {
-                answer[j] = num_list[i];
-                j++;
-            }
-        }
-
-        return answer;
+    public int[] solution(int n, int k) {
+        return IntStream.rangeClosed(1, n).filter(num -> num % k == 0).toArray();
     }
 }
