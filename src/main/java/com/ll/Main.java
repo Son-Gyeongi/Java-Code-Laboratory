@@ -1,21 +1,19 @@
 package com.ll;
 
+import java.util.Arrays;
+
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[] index_list = {16, 6, 5, 3, 12, 14, 11, 11, 17, 12, 7};
-        System.out.println(s.solution("cvsgiorszzzmrpaqpe", index_list));
+        int[] num_list = {12, 4, 15, 46, 38, 1, 14, 56, 32, 10};
+        System.out.println(Arrays.toString(s.solution(num_list)));
     }
 }
 
 class Solution {
-    public String solution(String my_string, int[] index_list) {
-        String answer = "";
+    public int[] solution(int[] num_list) {
+        int[] array = Arrays.stream(num_list).sorted().toArray();
 
-        for (int index : index_list) {
-            answer += my_string.charAt(index);
-        }
-
-        return answer;
+        return Arrays.copyOfRange(array, 5, array.length);
     }
 }
