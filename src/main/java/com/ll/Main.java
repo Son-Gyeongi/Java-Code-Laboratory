@@ -3,22 +3,13 @@ package com.ll;
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.solution("cccCCC"));
+        System.out.println(s.solution("banana", "nan"));
     }
 }
 
 class Solution {
-    public String solution(String my_string) {
-        StringBuilder answer = new StringBuilder();
-
-        int[] array = my_string.chars().map(i -> 'a' <= i && i <= 'z' ? i - 32 : i + 32).toArray();
-        // [67, 67, 67, 99, 99, 99]
-
-        for (Integer number : array) {
-            char character = (char) number.intValue();
-            answer.append(character);
-        }
-
-        return answer.toString();
+    public int solution(String my_string, String is_suffix) {
+        return !my_string.contains(is_suffix) ? 0 :
+                my_string.charAt(my_string.length() - 1) != is_suffix.charAt(is_suffix.length() - 1) ? 0 : 1;
     }
 }
