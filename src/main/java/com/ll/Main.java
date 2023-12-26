@@ -1,19 +1,24 @@
 package com.ll;
 
-import java.util.Arrays;
-
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[] num_list = {12, 4, 15, 46, 38, 1, 14, 56, 32, 10};
-        System.out.println(Arrays.toString(s.solution(num_list)));
+        System.out.println(s.solution("cccCCC"));
     }
 }
 
 class Solution {
-    public int[] solution(int[] num_list) {
-        int[] array = Arrays.stream(num_list).sorted().toArray();
+    public String solution(String my_string) {
+        StringBuilder answer = new StringBuilder();
 
-        return Arrays.copyOfRange(array, 5, array.length);
+        int[] array = my_string.chars().map(i -> 'a' <= i && i <= 'z' ? i - 32 : i + 32).toArray();
+        // [67, 67, 67, 99, 99, 99]
+
+        for (Integer number : array) {
+            char character = (char) number.intValue();
+            answer.append(character);
+        }
+
+        return answer.toString();
     }
 }
