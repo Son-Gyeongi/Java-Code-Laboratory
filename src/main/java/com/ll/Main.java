@@ -3,15 +3,17 @@ package com.ll;
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.solution("AbCdEfG", "aBc"));
+        System.out.println(s.solution(2, 91));
     }
 }
 
 class Solution {
-    public int solution(String myString, String pat) {
-        String myString_upperCase = myString.toUpperCase();
-        String pat_upperCase = pat.toUpperCase();
+    public int solution(int a, int b) {
 
-        return myString_upperCase.contains(pat_upperCase) ? 1 : 0;
+        String ab = "" + a + b;
+        int intab = Integer.parseInt(ab);
+        int multiab = 2 * a * b;
+
+        return Math.max(intab, multiab);
     }
 }
