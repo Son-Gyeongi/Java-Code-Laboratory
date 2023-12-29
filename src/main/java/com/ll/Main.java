@@ -3,22 +3,29 @@ package com.ll;
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[] num_list = {4, 2, 6, 1, 7, 6};
-        System.out.println(s.solution(num_list));
+        System.out.println(s.solution("205"));
     }
 }
 
 class Solution {
-    public int solution(int[] num_list) {
-        int odd = 0;
-        int even = 0;
+    public String solution(String rsp) {
+        StringBuilder answer = new StringBuilder();
 
-        for (int i = 0; i < num_list.length; i++) {
-            // 배열 인덱스가 0,2,4.. -> 홀수 번째로 나오기
-            if (i % 2 == 0) odd += num_list[i];
-            else even += num_list[i];
+        // 가위는 2 바위는 0 보는 5로 표현
+        for (int i = 0; i < rsp.length(); i++) {
+            switch (String.valueOf(rsp.charAt(i))) {
+                case "2" :
+                    answer.append("0");
+                    break;
+                case "0" :
+                    answer.append("5");
+                    break;
+                case "5" :
+                    answer.append("2");
+                    break;
+            }
         }
 
-        return Math.max(odd, even);
+        return answer.toString();
     }
 }
