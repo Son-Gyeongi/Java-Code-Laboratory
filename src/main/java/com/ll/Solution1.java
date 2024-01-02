@@ -7,7 +7,11 @@ public class Solution1 {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
 
-        if (n%2==0) System.out.println(n + " is even");
-        else System.out.println(n + " is odd");
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= i; j++) {
+                System.out.print("*");
+            }
+            System.out.println();
+        }
     }
 }
