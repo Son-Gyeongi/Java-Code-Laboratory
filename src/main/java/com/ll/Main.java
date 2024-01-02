@@ -1,26 +1,26 @@
 package com.ll;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[] numbers = {1, 2, -3, 4, -5};
-        System.out.println(s.solution(numbers));
+        System.out.println(Arrays.toString(s.solution(10)));
     }
 }
 
 class Solution {
-    public int solution(int[] numbers) {
-        int answer;
-        int max = numbers[0] * numbers[1];
+    public int[] solution(int n) {
+        List<Integer> answer = new ArrayList<>();
 
-        for (int i = 0; i < numbers.length; i++) {
-            for (int j = 0; j < numbers.length; j++) {
-                if (i == j) break; // 같은 인덱스는 거른다.
-                answer = numbers[i] * numbers[j];
-                max = Math.max(max, answer);  // 최대값
-            }
+        while (n != 1) {
+            answer.add(n);
+            n = n % 2 == 0 ? n / 2 : 3 * n + 1;
         }
+        answer.add(n);
 
-        return max;
+        return answer.stream().mapToInt(i -> i).toArray();
     }
 }
