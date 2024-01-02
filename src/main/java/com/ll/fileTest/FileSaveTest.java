@@ -9,7 +9,7 @@ public class FileSaveTest {
         String content = "파일에 저장될 내용입니다.2";
 
         try {
-            FileWriter writer = new FileWriter("C:/techitStudy/demo20231019/filesave/"+fileName);
+            FileWriter writer = new FileWriter("C:/techitStudy/demo20231019/filesave/" + fileName);
             writer.write(content);
             writer.close();
             // 코드에서 파일이 저장되는 위치는 현재 작업 디렉토리

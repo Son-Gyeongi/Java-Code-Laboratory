@@ -34,13 +34,13 @@ abstract class 무기 {
 
 class 칼 extends 무기 {
     void 작동(String name, int num) {
-        System.out.println(num+"살 전사 "+name+"님이 칼로 공격합니다.");
+        System.out.println(num + "살 전사 " + name + "님이 칼로 공격합니다.");
     }
 }
 
 class 활 extends 무기 {
     void 작동(String name, int num) {
-        System.out.println(num+"살 전사 "+name+"님이 활로 공격합니다.");
+        System.out.println(num + "살 전사 " + name + "님이 활로 공격합니다.");
     }
 }
 

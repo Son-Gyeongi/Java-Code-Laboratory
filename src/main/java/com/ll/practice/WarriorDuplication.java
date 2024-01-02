@@ -30,6 +30,7 @@ class 전사Dup {
 
 abstract class 무기Dup {
     String 무기명;
+
     void 작동(String 사용자_이름, int 사용자_나이) {
         System.out.println(사용자_나이 + "살 전사 " + 사용자_이름 + "(이)가 " + 무기명 + "(으)로 공격합니다.");
     }

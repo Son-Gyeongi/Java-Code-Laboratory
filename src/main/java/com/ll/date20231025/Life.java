@@ -28,6 +28,7 @@ class 생물 {
         System.out.println("생물이 생성되었습니다.");
     }
 }
+
 class 동물 extends 생물 {
     동물() {
         // super(); // 부모 클래스의 생성자를 호출합니다. 생략가능합니다.
@@ -37,6 +38,7 @@ class 동물 extends 생물 {
     }
 
 }
+
 class 사람 extends 동물 {
 
     사람() {

@@ -51,6 +51,6 @@ class 전사A {
     }
 
     void 공격문구출력A(String attackerName, String weaponName) {
-        System.out.println(attackerName + "(이)가 "+weaponName+"(으)로 공격합니다.");
+        System.out.println(attackerName + "(이)가 " + weaponName + "(으)로 공격합니다.");
     }
 }

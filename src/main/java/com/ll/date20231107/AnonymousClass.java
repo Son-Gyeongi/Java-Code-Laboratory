@@ -46,5 +46,6 @@ abstract class Player3 {
 // 인터페이스는 100% 추상메서드로만 구성되어야 한다.
 interface Doctor3 {
     void heal();
+
     void talk();
 }

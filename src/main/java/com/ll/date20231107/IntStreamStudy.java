@@ -41,7 +41,7 @@ public class IntStreamStudy {
 
         System.out.println("== v6-2 == 2만 출력");
         IntStream.rangeClosed(1, 10)
-                .filter(i -> i==2)
+                .filter(i -> i == 2)
                 .forEach(System.out::println);
 
         System.out.println("== v6-2-1 == 2의 배수만 출력");

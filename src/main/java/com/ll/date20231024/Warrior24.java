@@ -30,13 +30,13 @@ class 무기24 {
 
 class 칼24 extends 무기24 {
     void 출력(String name, int num) {
-        System.out.println(num+"살 전사 "+name+"님이 칼로 공격합니다.");
+        System.out.println(num + "살 전사 " + name + "님이 칼로 공격합니다.");
     }
 }
 
 class 활24 extends 무기24 {
     void 출력(String name, int num) {
-        System.out.println(num+"살 전사 "+name+"님이 활로 공격합니다.");
+        System.out.println(num + "살 전사 " + name + "님이 활로 공격합니다.");
     }
 }
 

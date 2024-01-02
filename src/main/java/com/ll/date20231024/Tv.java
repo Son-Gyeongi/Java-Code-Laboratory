@@ -65,6 +65,7 @@ public class Tv {
 
 abstract class 표준Tv {
     abstract void 켜기();
+
     abstract void 끄기();
 }
 

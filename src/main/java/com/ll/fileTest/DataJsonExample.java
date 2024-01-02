@@ -23,7 +23,7 @@ public class DataJsonExample {
         String jsonData = gson.toJson(quotes);
 
         // 파일에 저장
-        try (FileWriter writer = new FileWriter(folderPath+"data.json")) {
+        try (FileWriter writer = new FileWriter(folderPath + "data.json")) {
             writer.write(jsonData);
         } catch (IOException e) {
             e.printStackTrace();

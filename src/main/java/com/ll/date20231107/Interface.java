@@ -19,6 +19,7 @@ class Person1 {
 interface Doctor1 {
     // 인터페이스는 무조건 추상클래스밖에 못쓴다.
     public abstract void say(); // public abstract 생략
+
     public abstract void heal();
 }
 

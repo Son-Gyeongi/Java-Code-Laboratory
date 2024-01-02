@@ -3,13 +3,13 @@ package com.ll.date20231030;
 /**
  * # 공통목표
  * - 재귀를 이용해서 풀어주세요.
- *
+ * <p>
  * - 1단계
- *     - 목표 : Calc.run("3 * 1") == 3
+ * - 목표 : Calc.run("3 * 1") == 3
  * - 2단계
- *     - 목표 : Calc.run("3 * 1 + (1 - 1)") == 3
+ * - 목표 : Calc.run("3 * 1 + (1 - 1)") == 3
  * - 3단계
- *     - 목표 : Calc.run("3 * 1 + (1 - (4 * 1 - (1 - 1)))") == 0
+ * - 목표 : Calc.run("3 * 1 + (1 - (4 * 1 - (1 - 1)))") == 0
  */
 public class Cal {
     public static int run(String exp) { // exp , expression 식

@@ -31,7 +31,7 @@ class 전사Con {
 // 그래서 abstract 안 빼도 된다.
 abstract class 무기Con {
     String 무기명;
-    
+
     void 작동(String 이름, int 나이) {
         System.out.println(나이 + "살 전사 " + 이름 + "(이)가 " + 무기명 + "(으)로 공격합니다.");
     }
@@ -46,7 +46,7 @@ class 칼Con extends 무기Con {
 }
 
 class 활Con extends 무기Con {
-    
+
     // 활Con 생성자
     활Con() {
         무기명 = "활";

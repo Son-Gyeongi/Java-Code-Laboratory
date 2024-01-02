@@ -10,7 +10,7 @@ import java.util.List;
 public class FileListReadTest {
     public static void main(String[] args) {
         String folderPath = "C:/techitStudy/demo20231019/filesave/";
-        int id =0;
+        int id = 0;
         List<FileTest> fileContents = new ArrayList<>();
 
         File folder = new File(folderPath);

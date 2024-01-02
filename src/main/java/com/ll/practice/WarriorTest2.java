@@ -33,12 +33,12 @@ abstract class 무기 {
 
 class 칼 extends 무기 {
     void 작동(String 이름, int 나이) {
-        System.out.println(나이+"살 전사 "+이름+"(이)가 칼(으)로 공격합니다.");
+        System.out.println(나이 + "살 전사 " + 이름 + "(이)가 칼(으)로 공격합니다.");
     }
 }
 
 class 활 extends 무기 {
     void 작동(String 이름, int 나이) {
-        System.out.println(나이+"살 전사 "+이름+"(이)가 활(으)로 공격합니다.");
+        System.out.println(나이 + "살 전사 " + 이름 + "(이)가 활(으)로 공격합니다.");
     }
 }

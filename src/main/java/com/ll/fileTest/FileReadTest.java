@@ -9,7 +9,7 @@ public class FileReadTest {
         String fileName = "example.txt";
 
         try {
-            FileReader fileReader = new FileReader("C:/techitStudy/demo20231019/filesave/"+fileName);
+            FileReader fileReader = new FileReader("C:/techitStudy/demo20231019/filesave/" + fileName);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
 
             String line;

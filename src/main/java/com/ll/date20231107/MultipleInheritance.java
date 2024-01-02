@@ -19,6 +19,7 @@ class Person {
 class Doctor {
     void say() {
     }
+
     void heal() {
     }
 }

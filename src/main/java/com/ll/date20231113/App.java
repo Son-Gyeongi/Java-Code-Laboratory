@@ -8,6 +8,7 @@ public class App {
     int cnt = 0;
     List<Quotation> quotationList = new ArrayList<>();
     Scanner scanner = new Scanner(System.in);
+
     public void run() {
         System.out.println("=== 명언 ===");
 

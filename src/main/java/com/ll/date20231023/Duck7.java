@@ -56,6 +56,7 @@ class 청둥오리7 extends 오리7 {
 class 흰오리7 extends 오리7 {
 
 }
+
 class 고무오리7 extends 오리7 {
     // 메서드 재정의 라고 합니다.
     // 메서드 오버라이드 라고도 합니다.

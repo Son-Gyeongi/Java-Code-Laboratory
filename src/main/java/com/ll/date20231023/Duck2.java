@@ -26,13 +26,13 @@ class 오리2 {
 /* 요구사항
 - D2 완료 : 클래스와 메서드를 만들어서 처리
  */
-class 청둥오리{
+class 청둥오리 {
     void 날다() {
         System.out.println("오리가 날개로 날아갑니다.");
     }
 }
 
-class 흰오리{
+class 흰오리 {
     void 날다() {
         System.out.println("오리가 날개로 날아갑니다.");
     }

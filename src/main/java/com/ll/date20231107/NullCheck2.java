@@ -15,7 +15,7 @@ public class NullCheck2 {
                     isHandNull = false;
                     person1.getLeftArm().getHand().grab(); // 왼팔에 달린 왼손으로 잡기
                 }
-        }
+            }
 
         if (isHandNull) {
             System.out.println("hand is null");
