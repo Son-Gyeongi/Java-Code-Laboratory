@@ -1,21 +1,27 @@
 package com.ll;
 
-import java.util.stream.IntStream;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[] arr = {1, 1, 1, 1, 0};
-        System.out.println(s.solution(arr, 3));
+        System.out.println(s.solution("I love you", 3, 6));
     }
 }
 
 class Solution {
-    public int solution(int[] arr, int idx) {
-        return IntStream.range(0, arr.length)
-                .filter(i -> idx <= i)
-                .filter(i -> arr[i] == 1)
-                .findFirst()
-                .orElse(-1);
+    public String solution(String my_string, int num1, int num2) {
+        String answer = "";
+
+        String[] strArr = my_string.split("");
+
+        String tmp = strArr[num1];
+        strArr[num1] = strArr[num2];
+        strArr[num2] = tmp;
+
+        answer = Arrays.stream(strArr).collect(Collectors.joining());
+
+        return answer;
     }
 }
