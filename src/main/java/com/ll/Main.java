@@ -1,27 +1,22 @@
 package com.ll;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.solution("I love you", 3, 6));
+        System.out.println(Arrays.toString(s.solution("hi12392")));
     }
 }
 
 class Solution {
-    public String solution(String my_string, int num1, int num2) {
-        String answer = "";
+    public int[] solution(String my_string) {
+        String str = my_string.replaceAll("[a-zA-Z]", "");
+        String[] strArr = str.split("");
 
-        String[] strArr = my_string.split("");
-
-        String tmp = strArr[num1];
-        strArr[num1] = strArr[num2];
-        strArr[num2] = tmp;
-
-        answer = Arrays.stream(strArr).collect(Collectors.joining());
-
-        return answer;
+        return Arrays.stream(strArr).mapToInt(Integer::parseInt)
+                .filter(i -> 0 <= i && i <= 9)
+                .sorted()
+                .toArray();
     }
 }
