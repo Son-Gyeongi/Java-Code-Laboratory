@@ -1,32 +1,20 @@
 package com.ll;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.stream.IntStream;
 
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(Arrays.toString(s.solution("xabcxdefxghi")));
+        String[] names = {"nami", "ahri", "jayce", "garen", "ivern", "vex", "jinx"};
+        System.out.println(Arrays.toString(s.solution(names)));
     }
 }
 
 class Solution {
-    public int[] solution(String myString) {
-        List<Integer> answer = new ArrayList<>();
-//        char[] charArray = myString.toCharArray(); // [o, x, o, o, x, o, x, x, o, x]
-//        String[] split = myString.split("x"); // "oxooxoxxox" [o, oo, o, , o]
-//        System.out.println(Arrays.toString(split)); // "xabcxdefxghi" [, abc, def, ghi]
-
-//        if (charArray[0] == 'x') answer.add(0);
-//        if (myString.charAt(0) == 'x') answer.add(0);
-
-        Arrays.stream(myString.split("x"))
-                .map(i -> answer.add(i.length())).toArray();
-
-//        if (charArray[charArray.length -1] == 'x') answer.add(0);
-        if (myString.charAt(myString.length() -1) == 'x') answer.add(0);
-
-        return answer.stream().mapToInt(i -> i).toArray();
+    public String[] solution(String[] names) {
+        return IntStream.range(0, names.length).filter(i -> i % 5 == 0)
+                .mapToObj(i -> names[i])
+                .toArray(String[]::new); // IntStream요소가 문자열 배열로 변경됨
     }
 }
