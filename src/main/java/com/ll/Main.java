@@ -3,34 +3,30 @@ package com.ll;
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[] numLog = {0, 1, 0, 10, 0, 1, 0, 10, 0, -1, -2, -1}; // 각각 연산한 결과
-        System.out.println(s.solution(numLog));
+        System.out.println(s.solution("43 + 12"));
     }
 }
 
 class Solution {
-    public String solution(int[] numLog) {
-        StringBuilder answer = new StringBuilder();
+    public int solution(String binomial) {
+        int answer = 0;
 
-        for (int i = 0; i < numLog.length - 1; i++) {
-            int num = numLog[i + 1] - numLog[i];
+        int a = Integer.parseInt(binomial.split(" ")[0]);
+        String op = binomial.split(" ")[1];
+        int b = Integer.parseInt(binomial.split(" ")[2]);
 
-            switch (num) {
-                case 1:
-                    answer.append("w");
-                    break;
-                case -1:
-                    answer.append("s");
-                    break;
-                case 10:
-                    answer.append("d");
-                    break;
-                case -10:
-                    answer.append("a");
-                    break;
-            }
+        switch (op) {
+            case "+" :
+                answer = a + b;
+                break;
+            case "-" :
+                answer = a - b;
+                break;
+            case "*" :
+                answer = a * b;
+                break;
         }
 
-        return answer.toString();
+        return answer;
     }
 }
