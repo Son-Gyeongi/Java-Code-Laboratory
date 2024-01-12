@@ -5,14 +5,23 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(Arrays.toString(s.solution("dxccxbbbxaaaa")));
+        int[] numbers = {4, 455, 6, 4, -1, 45, 6};
+        System.out.println(Arrays.toString(s.solution(numbers, "left")));
     }
 }
 
 class Solution {
-    public String[] solution(String myString) {
-        return Arrays.stream(myString.split("x"))
-                .filter(i -> !i.isEmpty())
-                .sorted().toArray(String[]::new);
+    public int[] solution(int[] numbers, String direction) {
+        int[] answer = new int[numbers.length];
+
+        if (direction.equals("right")) {
+            if (numbers.length - 1 >= 0) System.arraycopy(numbers, 0, answer, 1, numbers.length - 1);
+            answer[0] = numbers[numbers.length - 1];
+        } else {
+            if (numbers.length - 1 >= 0) System.arraycopy(numbers, 1, answer, 0, numbers.length - 1);
+            answer[answer.length - 1] = numbers[0];
+        }
+
+        return answer;
     }
 }
