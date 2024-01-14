@@ -3,32 +3,21 @@ package com.ll;
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.solution(23)); // cd
+        System.out.println(s.solution(29183, 1));
     }
 }
 
 class Solution {
-    public String solution(int age) {
-        StringBuilder answer = new StringBuilder();
-
-        // a는 0, b는 1, c는 2, ..., j는 9
-        String str = age + "";
+    public int solution(int num, int k) {
+        String str = num + "";
+        String[] strArr = str.split("");
 
         for (int i = 0; i < str.length(); i++) {
-            switch (str.charAt(i)) {
-                case '0' : answer.append("a"); break;
-                case '1' : answer.append("b"); break;
-                case '2' : answer.append("c"); break;
-                case '3' : answer.append("d"); break;
-                case '4' : answer.append("e"); break;
-                case '5' : answer.append("f"); break;
-                case '6' : answer.append("g"); break;
-                case '7' : answer.append("h"); break;
-                case '8' : answer.append("i"); break;
-                case '9' : answer.append("j"); break;
+            if (strArr[i].equals(k + "")) {
+                return i + 1;
             }
         }
 
-        return answer.toString();
+        return -1;
     }
 }
