@@ -3,22 +3,16 @@ package com.ll;
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[][] board = {{0, 1, 2},
-                        {1, 2, 3},
-                        {2, 3, 4},
-                        {3, 4, 5}};
-        System.out.println(s.solution(board, 2));
+        System.out.println(s.solution("aaaaa", "bbbbb"));
     }
 }
 
 class Solution {
-    public int solution(int[][] board, int k) {
-        int answer = 0;
+    public String solution(String str1, String str2) {
+        String answer = "";
 
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++) {
-                if (i + j <= k) answer += board[i][j];
-            }
+        for (int i = 0; i < str1.length(); i++) {
+            answer += ("" + str1.charAt(i) + str2.charAt(i));
         }
 
         return answer;
