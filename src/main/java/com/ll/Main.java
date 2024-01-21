@@ -1,27 +1,31 @@
 package com.ll;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[] arr = {0, 1, 2, 3, 4};
-        int[][] queries = {{0, 1},
-                            {1, 2},
-                            {2, 3}};
-        System.out.println(Arrays.toString(s.solution(arr, queries)));
+        int[] arr = {3, 2, 4, 1, 3};
+        boolean[] flag = {true, false, true, false, false};
+        System.out.println(Arrays.toString(s.solution(arr, flag)));
     }
 }
 
 class Solution {
-    public int[] solution(int[] arr, int[][] queries) {
-        for (int i = 0; i < queries.length; i++) {
-            for (int j = 0; j < arr.length; j++) {
-                if (queries[i][0] <= j && j <= queries[i][1])
-                    arr[j] += 1;
+    public int[] solution(int[] arr, boolean[] flag) {
+        List<Integer> answer = new ArrayList<>();
+
+        for (int i = 0; i < arr.length; i++) {
+            if (flag[i]) {
+                int repeat = arr[i] * 2;
+                for (int j = 0; j < repeat; j++) answer.add(arr[i]);
+            } else {
+                for (int j = 0; j < arr[i]; j++) answer.remove(answer.size() - 1);
             }
         }
 
-        return arr;
+        return answer.stream().mapToInt(Integer::intValue).toArray();
     }
 }
