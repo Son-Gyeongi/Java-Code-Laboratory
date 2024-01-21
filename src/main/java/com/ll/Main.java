@@ -1,16 +1,27 @@
 package com.ll;
 
+import java.util.Arrays;
+
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.solution("AAAAaaaa", "a"));
+        int[] num_list = {1, 2, 3, 4, 5, 6, 7, 8};
+        System.out.println(Arrays.deepToString(s.solution(num_list, 2)));
     }
 }
 
 class Solution {
-    public String solution(String myString, String pat) {
-        int strLastIdx = myString.lastIndexOf(pat) + pat.length();
+    public int[][] solution(int[] num_list, int n) {
+        int[][] answer = new int[num_list.length/n][n];
+        int cnt = 0;
 
-        return myString.substring(0, strLastIdx);
+        for (int i = 0; i < answer.length; i++) {
+            for (int j = 0; j < answer[i].length; j++) {
+                answer[i][j] = num_list[cnt];
+                ++cnt;
+            }
+        }
+
+        return answer;
     }
 }
