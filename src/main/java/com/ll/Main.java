@@ -5,22 +5,17 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[] arr = {0, 1, 2, 3, 4};
-        int[][] queries = {{0, 3}, {1, 2}, {1, 4}};
-        System.out.println(Arrays.toString(s.solution(arr, queries)));
+        String[] intStrs = {"0123456789", "9876543210", "9999999999999"};
+        System.out.println(Arrays.toString(s.solution(intStrs, 50000, 5, 5)));
     }
 }
 
 class Solution {
-    public int[] solution(int[] arr, int[][] queries) {
-        int temp = 0;
-
-        for (int[] query : queries) {
-            temp = arr[query[0]];
-            arr[query[0]] = arr[query[1]];
-            arr[query[1]] = temp;
-        }
-
-        return arr;
+    public int[] solution(String[] intStrs, int k, int s, int l) {
+        return Arrays.stream(intStrs)
+                .map(str -> str.substring(s, s + l))
+                .mapToInt(Integer::parseInt)
+                .filter(i -> k < i)
+                .toArray();
     }
 }
