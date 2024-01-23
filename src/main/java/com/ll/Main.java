@@ -5,23 +5,22 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[] num_list = {1, 2, 3, 4, 5, 6, 7, 8};
-        System.out.println(Arrays.deepToString(s.solution(num_list, 2)));
+        int[] arr = {0, 1, 2, 3, 4};
+        int[][] queries = {{0, 3}, {1, 2}, {1, 4}};
+        System.out.println(Arrays.toString(s.solution(arr, queries)));
     }
 }
 
 class Solution {
-    public int[][] solution(int[] num_list, int n) {
-        int[][] answer = new int[num_list.length/n][n];
-        int cnt = 0;
+    public int[] solution(int[] arr, int[][] queries) {
+        int temp = 0;
 
-        for (int i = 0; i < answer.length; i++) {
-            for (int j = 0; j < answer[i].length; j++) {
-                answer[i][j] = num_list[cnt];
-                ++cnt;
-            }
+        for (int[] query : queries) {
+            temp = arr[query[0]];
+            arr[query[0]] = arr[query[1]];
+            arr[query[1]] = temp;
         }
 
-        return answer;
+        return arr;
     }
 }
