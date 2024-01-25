@@ -1,45 +1,25 @@
 package com.ll;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.solution(".... . .-.. .-.. ---"));
+        System.out.println(s.solution(7));
     }
 }
 
 class Solution {
-    public String solution(String letter) {
-        String answer = "";
+    public int solution(int n) {
+        int answer = 1;
 
-        /*
-        morse = {
-                    '.-':'a','-...':'b','-.-.':'c','-..':'d','.':'e','..-.':'f',
-                    '--.':'g','....':'h','..':'i','.---':'j','-.-':'k','.-..':'l',
-                    '--':'m','-.':'n','---':'o','.--.':'p','--.-':'q','.-.':'r',
-                    '...':'s','-':'t','..-':'u','...-':'v','.--':'w','-..-':'x',
-                    '-.--':'y','--..':'z'
-                }
-         */
-        String[] morse = {".-", "-...", "-.-.", "-..", ".", "..-.",
-                            "--.", "....", "..", ".---", "-.-", ".-..",
-                            "--", "-.", "---", ".--.", "--.-", ".-.",
-                            "...", "-", "..-", "...-", ".--", "-..-",
-                            "-.--", "--.."};
-
-        Map<String, Character> morseStr = new HashMap<>();
-
-        for (int i = 0; i < morse.length; i++) {
-            morseStr.put(morse[i], (char) (97 + i));
-        }
-
-        String[] splitLetter = letter.split(" ");
-
-        for (String s : splitLetter) {
-            answer += morseStr.get(s);
-        }
+        if (n == 3628800) return 10;
+        else if (362880 <= n && n < 3628800) return 9;
+        else if (40320 <= n && n < 362880) return 8;
+        else if (5040 <= n && n < 40320) return 7;
+        else if (720 <= n && n < 5040) return 6;
+        else if (120 <= n && n < 720) return 5;
+        else if (24 <= n && n < 120) return 4;
+        else if (6 <= n && n < 24) return 3;
+        else if (2 <= n && n < 6) return 2;
 
         return answer;
     }
