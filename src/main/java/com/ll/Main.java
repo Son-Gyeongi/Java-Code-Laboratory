@@ -1,21 +1,27 @@
 package com.ll;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.solution("aAb1B2cC34oOp"));
+        int[] arr = {5, 1, 4};
+        System.out.println(Arrays.toString(s.solution(arr)));
     }
 }
 
 class Solution {
-    public int solution(String my_string) {
-        String s = my_string.replaceAll("[a-zA-Z]", " ");
+    public int[] solution(int[] arr) {
+        List<Integer> list = new ArrayList<>();
 
-        return Arrays.stream(s.split(" "))
-                .filter(i -> !i.isEmpty())
-                .mapToInt(Integer::valueOf)
-                .sum();
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i]; j++) {
+                list.add(arr[i]);
+            }
+        }
+
+        return list.stream().mapToInt(Integer::valueOf).toArray();
     }
 }
