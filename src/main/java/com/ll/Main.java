@@ -1,35 +1,27 @@
 package com.ll;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[] arr = {293, 1000, 395, 678, 94};
-        int[] delete_list = {94, 777, 104, 1000, 1, 12};
-        System.out.println(Arrays.toString(s.solution(arr, delete_list)));
+        int[] emergency = {30, 10, 23, 6, 100};
+        System.out.println(Arrays.toString(s.solution(emergency)));
     }
 }
 
 class Solution {
-    public int[] solution(int[] arr, int[] delete_list) {
-        List<Integer> list = new ArrayList<>(arr.length);
+    public int[] solution(int[] emergency) {
+        int[] answer = new int[emergency.length];
 
-        // int 배열을 Integer 리스트로 변환
-        for (int value : arr) {
-            list.add(value);
-        }
-
-        for (int delete : delete_list) {
-            for (int j = 0; j < list.size(); j++) {
-                if (delete == list.get(j)) {
-                    list.remove(j);
+        for (int i = 0; i < emergency.length; i++) {
+            for (int j = 0; j < emergency.length; j++) {
+                if (emergency[i] >= emergency[j]) {
+                    answer[j] += 1;
                 }
             }
         }
 
-        return list.stream().mapToInt(Integer::valueOf).toArray();
+        return answer;
     }
 }
