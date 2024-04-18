@@ -1,31 +1,41 @@
 package com.ll;
 
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-//        int[] arr = {5, 9, 7, 10}; // 5
-//        int[] arr = {3,2,6}; // 10
-        int[] arr = {2, 36, 1, 3}; // 1
-        System.out.println(Arrays.toString(s.solution(arr, 1)));
+//        int[] slicer = {1, 5, 2};
+//        int[] num_list = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+        int[] slicer = {0, 1, 1};
+        int[] num_list = {10, 8, 6, 4, 2};
+        System.out.println(Arrays.toString(s.solution(2, slicer, num_list)));
     }
 }
 
 class Solution {
-    public int[] solution(int[] arr, int divisor) {
+    public int[] solution(int n, int[] slicer, int[] num_list) {
         int[] answer = {};
 
-        int[] filteredArr = Arrays.stream(arr)
-                .filter(a -> a % divisor == 0)
-                .toArray();
-
-        if (filteredArr.length == 0) {
-            answer = new int[1];
-            answer[0] = -1;
-            return answer;
+        switch (n) {
+            case 1 :
+                return Arrays.copyOfRange(num_list, 0, slicer[1] + 1);
+            case 2 :
+                return Arrays.copyOfRange(num_list, slicer[0], num_list.length);
+            case 3 :
+                return Arrays.copyOfRange(num_list, slicer[0], slicer[1] + 1);
+            case 4 :
+                int[] array = Arrays.copyOfRange(num_list, slicer[0], slicer[1] + 1);
+                int count = (int) IntStream.range(0, array.length).filter(a -> a % slicer[2] == 0).count();
+                answer = new int[count];
+                int j = 0;
+                for (int i = 0; i < count; i++) {
+                    answer[i] = array[j];
+                    j += slicer[2];
+                }
         }
 
-        return Arrays.stream(filteredArr).sorted().toArray();
+        return answer;
     }
 }
