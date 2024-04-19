@@ -1,41 +1,26 @@
 package com.ll;
 
-import java.util.Arrays;
-import java.util.stream.IntStream;
-
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-//        int[] slicer = {1, 5, 2};
-//        int[] num_list = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-        int[] slicer = {0, 1, 1};
-        int[] num_list = {10, 8, 6, 4, 2};
-        System.out.println(Arrays.toString(s.solution(2, slicer, num_list)));
+        System.out.println(s.solution(626331));
     }
 }
 
 class Solution {
-    public int[] solution(int n, int[] slicer, int[] num_list) {
-        int[] answer = {};
+    public int solution(long num) {
+        int count = 0;
 
-        switch (n) {
-            case 1 :
-                return Arrays.copyOfRange(num_list, 0, slicer[1] + 1);
-            case 2 :
-                return Arrays.copyOfRange(num_list, slicer[0], num_list.length);
-            case 3 :
-                return Arrays.copyOfRange(num_list, slicer[0], slicer[1] + 1);
-            case 4 :
-                int[] array = Arrays.copyOfRange(num_list, slicer[0], slicer[1] + 1);
-                int count = (int) IntStream.range(0, array.length).filter(a -> a % slicer[2] == 0).count();
-                answer = new int[count];
-                int j = 0;
-                for (int i = 0; i < count; i++) {
-                    answer[i] = array[j];
-                    j += slicer[2];
-                }
+        if (num == 1) return 0;
+
+        while (num != 1) {
+            if (num % 2 ==0) num /= 2;
+            else num = (num * 3) + 1;
+
+            count++;
+            if (count >= 500) return -1;
         }
 
-        return answer;
+        return count;
     }
 }
