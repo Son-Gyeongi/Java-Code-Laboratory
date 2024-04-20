@@ -1,14 +1,23 @@
 package com.ll;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.solution("abcde"));
+        System.out.println(Arrays.toString(s.solution("baconlettucetomato")));
     }
 }
 
 class Solution {
-    public String solution(String s) {
-        return s.substring((s.length() - 1) / 2, (s.length() / 2) + 1);
+    public String[] solution(String myStr) {
+        String[] splitStr = myStr.split("[abc]");
+        String[] answer = Arrays.stream(splitStr).filter(str -> !Objects.equals(str, ""))
+                .toArray(String[]::new);
+
+        if (answer.length == 0) return new String[]{"EMPTY"};
+
+        return answer;
     }
 }
