@@ -12,7 +12,7 @@ public class Main {
 
 class Solution {
     public String[] solution(String myStr) {
-        String[] splitStr = myStr.split("[abc]");
+        String[] splitStr = myStr.split("[abc]+");
         String[] answer = Arrays.stream(splitStr).filter(str -> !Objects.equals(str, ""))
                 .toArray(String[]::new);
 
