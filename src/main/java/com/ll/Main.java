@@ -1,46 +1,45 @@
 package com.ll;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        String[] strArr = {"a", "bc", "d", "efg", "hi"};
-        System.out.println(s.solution(strArr));
+        int[] numbers = {4, 1, 2, 1};
+        System.out.println(s.solution(numbers, 4));
     }
 }
 
 class Solution {
-    public int solution(String[] strArr) {
-        int[] strCount = new int[strArr.length];
+    public int solution(int[] numbers, int target) {
+        return new NumberOfCases(numbers, target).calc();
+    }
+}
 
-        for (int i = 0; i < strCount.length; i++) {
-            strCount[i] = strArr[i].length();
+class NumberOfCases {
+    private int[] numbers;
+    private int target;
+
+    public NumberOfCases(int[] numbers, int target) {
+        this.numbers = numbers;
+        this.target = target;
+    }
+
+    public int calc() {
+        return calc(0, 0, "");
+    }
+
+    public int calc(int depth, int sum, String history) {
+        System.out.print(history); // 재귀함수의 history를 보자, history는 빼도 됨
+
+        if (depth == numbers.length) {
+            System.out.print(sum == target ? " [성공]" : " [실패]");
         }
 
-        Map<Integer, Integer> myMap =new HashMap<>();
+        System.out.println();
 
-        Arrays.stream(strCount).forEach(str -> {
-            // 값이 있으면
-            if (myMap.containsKey(str)) {
-                Integer count = myMap.get(str);
-                myMap.put(str, ++count);
-            } else { // 값이 없으면
-                myMap.put(str, 1);
-            }
-        });
+        if (depth == numbers.length) return sum == target ? 1 : 0;
 
-        // Map 반복문으로 순회, 큰 값 꺼내기
-        int max = 0;
-        for (Map.Entry<Integer, Integer> entry : myMap.entrySet()) {
-            int key = entry.getKey();
-            int value = entry.getValue();
-
-            if (max < value) max = value;
-        }
-
-        return max;
+        // 현재 내가 있는 지점에서 플러스 한 버전과 마이너스 한 버전
+        return calc(depth + 1, sum + numbers[depth], history + " + " + numbers[depth])
+                + calc(depth + 1, sum - numbers[depth], history + " - " + numbers[depth]);
     }
 }
