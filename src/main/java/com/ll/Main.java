@@ -79,8 +79,8 @@ class Calculator {
         this.queue = new LinkedList<>(); // Queue의 구현체는 보통 LinkedList<> 사용
         // 맨 처음에 queue에 할 일을 넣어줘야 함
         // 시작점 넣어주기 (0, 0)을 탐색해라
-        this.queue.add(new Point(0, 0)); // queue의 뒤에서 넣기
-        this.scores[0][0] = 1;
+        Point basePoint = new Point(0, 0);
+        addQueue(basePoint, basePoint);
     }
 
     // queue가 비어있지 않는 한 계속 queue의 일을 받아와서 처리
@@ -97,39 +97,35 @@ class Calculator {
 
             // 좌로 갈 수 잇는지 체크
             if (canMoveLeft(point)) {
-                // 현재 있는 곳에서 다음에 방문할 곳
-                queue.add(point.leftOne());
-                // 다음 방문할 곳 = 현재 지점까지의 거리 + 1
-                this.scores[point.y][point.x - 1] = this.scores[point.y][point.x] + 1;
+                addQueue(point.leftOne(), point);
             }
 
             // 우로 갈 수 있는지 체크
             if (canMoveRight(point)) {
-                // 현재 있는 곳에서 다음에 방문할 곳
-                queue.add(point.rightOne());
-                // 다음 방문할 곳 = 현재 지점까지의 거리 + 1
-                this.scores[point.y][point.x + 1] = this.scores[point.y][point.x] + 1;
+                addQueue(point.rightOne(), point);
             }
 
             // 위로 갈 수 있는지 체크
             if (canMoveUp(point)) {
-                // 현재 있는 곳에서 다음에 방문할 곳
-                queue.add(point.upOne());
-                // 다음 방문할 곳 = 현재 지점까지의 거리 + 1
-                this.scores[point.y - 1][point.x] = this.scores[point.y][point.x] + 1;
+                addQueue(point.upOne(), point);
             }
 
             // 아래로 갈 수 있는지 체크
             if (canMoveDown(point)) {
-                // 현재 있는 곳에서 다음에 방문할 곳
-                queue.add(point.downOne());
-                // 다음 방문할 곳 = 현재 지점까지의 거리 + 1
-                this.scores[point.y + 1][point.x] = this.scores[point.y][point.x] + 1;
+                addQueue(point.downOne(), point);
             }
         }
 
         // 실패했다면 -1 반환
         return -1;
+    }
+
+    // fromPoint 에서 newPoint로 갈거다.
+    private void addQueue(Point newPoint, Point fromPoint) {
+        // 현재 있는 곳에서 다음에 방문할 곳
+        queue.add(newPoint); // queue의 뒤에서 넣기
+        // 다음 방문할 곳 = 현재 지점까지의 거리 + 1
+        this.scores[newPoint.y][newPoint.x] = this.scores[fromPoint.y][fromPoint.x] + 1;
     }
 
     // 내가 도달했는지 묻는 메서드
