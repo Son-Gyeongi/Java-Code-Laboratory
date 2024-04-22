@@ -1,25 +1,29 @@
 package com.ll;
 
-import java.util.Arrays;
+import java.util.Objects;
 
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[] arr = {4, 3, 2, 1};
-        System.out.println(Arrays.toString(s.solution(arr)));
+        int[] array = {7, 77, 17};
+        System.out.println(s.solution(array));
     }
 }
 
 class Solution {
-    public int[] solution(int[] arr) {
-        if (arr.length == 1) return new int[]{-1};
+    public int solution(int[] array) {
+        int answer = 0;
 
-        int min = arr[0];
-        for (int i = 1; i < arr.length; i++) {
-            if (min > arr[i]) min = arr[i];
+        for (int i = 0; i < array.length; i++) {
+            String[] splitStr = String.valueOf(array[i]).split("");
+
+            for (int j = 0; j < splitStr.length; j++) {
+                if (Objects.equals(splitStr[j], "7")) {
+                    answer++;
+                }
+            }
         }
 
-        int finalMin = min;
-        return Arrays.stream(arr).filter(a -> a != finalMin).toArray();
+        return answer;
     }
 }
