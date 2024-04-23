@@ -1,13 +1,9 @@
 package com.ll;
 
-import java.util.Scanner;
-
 public class Solution1 {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        String str = sc.next();
-        int n = sc.nextInt();
-
-        System.out.println(str.repeat(n));
+        // !@#$%^&*(\'"<>?:;
+        // 특수문에서 역슬래쉬(\) 붙이기 - \ 와 ' 와 " 에 붙이기
+        System.out.println("!@#$%^&*(\\'\"<>?:;");
     }
 }
