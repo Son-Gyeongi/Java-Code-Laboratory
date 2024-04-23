@@ -1,25 +1,29 @@
 package com.ll;
 
+import java.util.stream.IntStream;
+
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.solution(24, 27));
+        System.out.println(s.solution(3, 1, "qjnwezgrpirldywt"));
     }
 }
 
 class Solution {
-    public int solution(int left, int right) {
-        int answer = 0;
+    public String solution(int q, int r, String code) {
+        StringBuilder answer = new StringBuilder();
 
-        for (int i = left; i <= right; i++) {
-            // 약수가 홀수개
-            if (Math.pow((int) Math.sqrt(i), 2) == i) {
-                answer -= i;
-                continue;
-            }
-            answer += i;
+        String[] splitCode = code.split("");
+
+        int firstIdx = IntStream.range(0, splitCode.length)
+                .filter(idx -> idx % q == r)
+                .findFirst()
+                .getAsInt();
+
+        for (int i = firstIdx; i < splitCode.length; i += q) {
+            answer.append(splitCode[i]);
         }
 
-        return answer;
+        return answer.toString();
     }
 }
