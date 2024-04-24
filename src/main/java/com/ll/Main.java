@@ -1,35 +1,31 @@
 package com.ll;
 
+import java.util.Arrays;
+
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.solution("Zbcdefg"));
+        int[] arr = {1, 2, 3, 100, 99, 98};
+        System.out.println(s.solution(arr));
     }
 }
 
 class Solution {
-    public String solution(String s) {
-        StringBuilder answer = new StringBuilder();
+    public int solution(int[] arr) {
+        int count = 0;
 
-        String[] split = s.split("");
-        char[] charArray = s.toCharArray();
+        while(true) {
+            int[] beforeArr = Arrays.copyOf(arr, arr.length);
+            for(int i=0;i<arr.length;i++) {
+                if(arr[i] % 2 ==0 && 50 <= arr[i]) arr[i] = arr[i]/2;
+                else if (arr[i] % 2 == 1 && arr[i]<50) arr[i] = (arr[i]*2)+1;
+            }
+            count++;
 
-        for (int i = 122; i >= 97; i--) {
-            for (int j = 0; j < charArray.length; j++) {
-                if (charArray[j] == i) {
-                    answer.append(split[j]);
-                }
+            for(int i=0, j=0;i<arr.length;i++, j++) {
+                if(arr[i] != beforeArr[j]) break;
+                if(i == arr.length -1) return --count;
             }
         }
-
-        for (int i = 90; i >= 65; i--) {
-            for (int j = 0; j < charArray.length; j++) {
-                if (charArray[j] == i) {
-                    answer.append(split[j]);
-                }
-            }
-        }
-
-        return answer.toString();
     }
 }
