@@ -1,31 +1,26 @@
 package com.ll;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Objects;
 
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[] arr = {1,1,3,3,0,1,1};
-        System.out.println(Arrays.toString(s.solution(arr)));
+        System.out.println(s.solution("1 2 Z 3"));
     }
 }
 
 class Solution {
-    public int[] solution(int[] arr) {
-        List<Integer> answer = new ArrayList<>();
+    public int solution(String s) {
+        int answer = 0;
 
-        int num = arr[0]; // 연속된 수 저장
-        // 연속된 숫자 제거
-        for(int i=0;i<arr.length;i++){
-            if(num != arr[i]) {
-                answer.add(num);
-                num = arr[i];
-            }
+        String[] splitStr = s.split(" ");
+
+        for(int i=0;i<splitStr.length;i++) {
+            if (Objects.equals(splitStr[i], "Z"))
+                splitStr[i] = String.valueOf(-Integer.parseInt(splitStr[i - 1]));
+            answer += Integer.parseInt(splitStr[i]);
         }
-        answer.add(num);
 
-        return answer.stream().mapToInt(a -> a).toArray();
+        return answer;
     }
 }
