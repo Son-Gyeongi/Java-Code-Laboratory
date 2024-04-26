@@ -1,29 +1,31 @@
 package com.ll;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        String[] order = {"cafelatte", "americanoice", "hotcafelatte", "anything"};
-        System.out.println(s.solution(order));
+        int[] arr = {1,1,3,3,0,1,1};
+        System.out.println(Arrays.toString(s.solution(arr)));
     }
 }
 
 class Solution {
-    public int solution(String[] order) {
-        // 아메리카노 4,500원 / 카페라테 5,000원
-        // 차가운 지 따뜻한 지 구별 안해도 됨
-        // "anything"인 '아무거나'는 아메리카노
+    public int[] solution(int[] arr) {
+        List<Integer> answer = new ArrayList<>();
 
-        int americanoCount = (int) Arrays.stream(order)
-                .filter(o1 -> o1.contains("americano") || o1.contains("anything"))
-                .count();
+        int num = arr[0]; // 연속된 수 저장
+        // 연속된 숫자 제거
+        for(int i=0;i<arr.length;i++){
+            if(num != arr[i]) {
+                answer.add(num);
+                num = arr[i];
+            }
+        }
+        answer.add(num);
 
-        int cafelatteCount = (int) Arrays.stream(order)
-                .filter(o2 -> o2.contains("cafelatte"))
-                .count();
-
-        return (americanoCount * 4500) + (cafelatteCount * 5000);
+        return answer.stream().mapToInt(a -> a).toArray();
     }
 }
