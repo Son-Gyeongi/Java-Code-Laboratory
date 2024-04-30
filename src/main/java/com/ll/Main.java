@@ -1,33 +1,38 @@
 package com.ll;
 
-import java.util.Arrays;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(Arrays.toString(s.solution(420)));
+        int[] arr = {1, 4, 2, 5, 3};
+        System.out.println(Arrays.toString(s.solution(arr)));
     }
 }
 
 class Solution {
-    public int[] solution(int n) {
-        // Set은 중복, 순서 없음 - TreeSet은 오름차순 정렬해줌
-        Set<Integer> answer = new TreeSet<>();
+    public int[] solution(int[] arr) {
+        Stack<Integer> stk = new Stack<>();
+        int i = 0;
 
-        for (int i=2;i<=n;i++) {
-            while(n % i == 0) {
-                answer.add(i);
-                n /= i;
-            }
-
-            if (n/i == 1) {
-                answer.add(n);
-                break;
+        while(i < arr.length) {
+            if (!stk.isEmpty() && stk.peek() < arr[i]) {
+                stk.push(arr[i]);
+                i += 1;
+            } else if (!stk.isEmpty() && stk.peek() >= arr[i]) {
+                stk.pop();
+            } else {
+                stk.push(arr[i]);
+                i += 1;
             }
         }
 
-        return answer.stream().mapToInt(a -> a).toArray();
+        // Integer[] array = stk.toArray(Integer[]::new);
+        // System.out.println("Arrays.toString(array) = " + Arrays.toString(array));
+
+        int[] array1 = stk.stream().mapToInt(a -> a).toArray();
+        System.out.println("Arrays.toString(array1) = " + Arrays.toString(array1));
+
+        return array1;
     }
 }
