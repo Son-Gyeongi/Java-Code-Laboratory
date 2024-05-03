@@ -1,38 +1,33 @@
 package com.ll;
 
-import java.util.*;
-
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[] arr = {1, 4, 2, 5, 3};
-        System.out.println(Arrays.toString(s.solution(arr)));
+        int[] numbers = {1, 1, 1, 1, 1};
+        System.out.println(s.solution(numbers, 3));
     }
 }
 
 class Solution {
-    public int[] solution(int[] arr) {
-        Stack<Integer> stk = new Stack<>();
-        int i = 0;
+    private int answer = 0;
 
-        while(i < arr.length) {
-            if (!stk.isEmpty() && stk.peek() < arr[i]) {
-                stk.push(arr[i]);
-                i += 1;
-            } else if (!stk.isEmpty() && stk.peek() >= arr[i]) {
-                stk.pop();
-            } else {
-                stk.push(arr[i]);
-                i += 1;
-            }
+    public int solution(int[] numbers, int target) {
+        countTarget(numbers, 0, target, 0);
+
+        return answer;
+    }
+
+    public void countTarget(int[] numbers, int depth, int target, int total) {
+        if(target == total && numbers.length == depth) {
+            answer++;
         }
 
-        // Integer[] array = stk.toArray(Integer[]::new);
-        // System.out.println("Arrays.toString(array) = " + Arrays.toString(array));
+        if(depth == numbers.length) {
+            return;
+        }
 
-        int[] array1 = stk.stream().mapToInt(a -> a).toArray();
-        System.out.println("Arrays.toString(array1) = " + Arrays.toString(array1));
-
-        return array1;
+        // - 인지 + 인지에 따라 다르게
+        countTarget(numbers, depth+1, target, total-numbers[depth]);
+        countTarget(numbers, depth+1, target, total+numbers[depth]);
     }
 }
