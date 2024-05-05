@@ -1,33 +1,45 @@
 package com.ll;
 
+import java.util.Objects;
+
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[] numbers = {1, 1, 1, 1, 1};
-        System.out.println(s.solution(numbers, 3));
+        System.out.println(s.solution("AB", 1));
     }
 }
 
 class Solution {
-    private int answer = 0;
+    public String solution(String s, int n) {
+        StringBuilder answer = new StringBuilder();
+        String[] sArr = s.split("");
 
-    public int solution(int[] numbers, int target) {
-        countTarget(numbers, 0, target, 0);
+        String[] upperCase = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P"
+                ,"Q","R","S","T","U","V","W","X","Y","Z"};
+        String[] lowerCase = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p"
+                ,"q","r","s","t","u","v","w","x","y","z"};
 
-        return answer;
-    }
+        for (String string : sArr) {
+            if (Objects.equals(string, " ")) {
+                answer.append(string);
+                continue;
+            }
+            int idx;
 
-    public void countTarget(int[] numbers, int depth, int target, int total) {
-        if(target == total && numbers.length == depth) {
-            answer++;
+            for (int j = 0; j < upperCase.length; j++) {
+                // 대문자
+                if (Objects.equals(string, upperCase[j])) {
+                    idx = j + n;
+                    if (idx >= 26) idx -= 26;
+                    answer.append(upperCase[idx]);
+                } else if (Objects.equals(string, lowerCase[j])) { // 소문자
+                    idx = j + n;
+                    if (idx >= 26) idx -= 26;
+                    answer.append(lowerCase[idx]);
+                }
+            }
         }
 
-        if(depth == numbers.length) {
-            return;
-        }
-
-        // - 인지 + 인지에 따라 다르게
-        countTarget(numbers, depth+1, target, total-numbers[depth]);
-        countTarget(numbers, depth+1, target, total+numbers[depth]);
+        return answer.toString();
     }
 }
