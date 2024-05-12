@@ -1,8 +1,8 @@
 package com.ll;
 
 import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 public class Main {
     public static void main(String[] args) {
@@ -14,26 +14,25 @@ public class Main {
 }
 
 class Solution {
-    public Integer[] solution(int[] arr, int k) {
-        Integer[] answer = new Integer[k];
+    public int[] solution(int[] arr, int k) {
+        int[] answer = new int[k];
+        Integer[] temp = {};
 
-        // 중복 없는 Set 컬렉션
-        Set<Integer> setArr = new TreeSet<>();
+        // 중복 없고 순서
+        Set<Integer> setArr = new LinkedHashSet<>();
 
-        for (int i = 0; i < arr.length; i++) {
-            setArr.add(arr[i]);
+        for (int a : arr) {
+            setArr.add(a);
         }
 
-        // 주석
-        for (Integer a : setArr) {
-            System.out.println(a);
-        }
+        temp = setArr.toArray(temp);
 
-        setArr.toArray(answer);
-        System.out.println(Arrays.toString(answer));
-
-        for (int i = k-1; i < answer.length; i++) {
-            answer[i] = -1;
+        for (int i = 0; i < k; i++) {
+            if (i >= temp.length) {
+                answer[i] = -1;
+                continue;
+            }
+            answer[i] = temp[i];
         }
 
         return answer;
