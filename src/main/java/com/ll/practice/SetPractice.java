@@ -1,8 +1,6 @@
 package com.ll.practice;
 
-import java.util.Iterator;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class SetPractice {
     public static void main(String[] args) {
@@ -27,5 +25,26 @@ public class SetPractice {
         /*for (Integer integer : set) {
             System.out.println(integer);
         }*/
+
+        /*
+        Set의 요소를 하나씩 가져와서 배열에 넣는 것은 가능
+         */
+        Set<String> setStr = new HashSet<>();
+        // Set에 요소 추가
+        setStr.add("A");
+        setStr.add("B");
+        setStr.add("C");
+
+        // Set의 크기만큼의 배열 생성
+        String[] array = new String[setStr.size()];
+
+        // Set의 요소를 배열에 복사
+        setStr.toArray(array);
+        System.out.println(Arrays.toString(array));
+
+        // 배열 출력
+        for (String element : array) {
+            System.out.println(element);
+        }
     }
 }
