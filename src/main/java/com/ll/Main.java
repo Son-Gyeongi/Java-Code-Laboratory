@@ -1,38 +1,33 @@
 package com.ll;
 
 import java.util.Arrays;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[] arr = {0, 1, 1, 2, 2, 3};
-//        int[] arr = {0, 1, 1, 1, 1};
-        System.out.println(Arrays.toString(s.solution(arr, 3)));
+        int[] arr = {0, 1, 2, 4, 3};
+        int[][] queries = {{0, 4, 2},{0, 3, 2},{0, 2, 2}};
+        System.out.println(Arrays.toString(s.solution(arr, queries)));
     }
 }
 
 class Solution {
-    public int[] solution(int[] arr, int k) {
-        int[] answer = new int[k];
-        Integer[] temp = {};
+    public int[] solution(int[] arr, int[][] queries) {
+        int[] answer = new int[queries.length];
+        int j = 0;
 
-        // 중복 없고 순서
-        Set<Integer> setArr = new LinkedHashSet<>();
+        for (int[] query : queries) {
+            int[] temp = Arrays.copyOfRange(arr, query[0], query[1] + 1);
 
-        for (int a : arr) {
-            setArr.add(a);
-        }
+            int min = 1_000_001;
 
-        temp = setArr.toArray(temp);
-
-        for (int i = 0; i < k; i++) {
-            if (i >= temp.length) {
-                answer[i] = -1;
-                continue;
+            for (int i = 0; i < temp.length; i++) {
+                if (query[2] < temp[i]) {
+                    min = Math.min(min, temp[i]);
+                }
             }
-            answer[i] = temp[i];
+            answer[j] = min == 1_000_001 ? -1 : min;
+            j++;
         }
 
         return answer;
