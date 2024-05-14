@@ -1,35 +1,38 @@
 package com.ll;
 
-import java.util.Arrays;
-
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[] arr = {0, 1, 2, 4, 3};
-        int[][] queries = {{0, 4, 2},{0, 3, 2},{0, 2, 2}};
-        System.out.println(Arrays.toString(s.solution(arr, queries)));
+        int[][] queries = {{2, 3}, {0, 7}, {5, 9}, {6, 10}};
+        System.out.println(s.solution("rermgorpsam", queries));
     }
 }
 
 class Solution {
-    public int[] solution(int[] arr, int[][] queries) {
-        int[] answer = new int[queries.length];
-        int j = 0;
+    public String solution(String my_string, int[][] queries) {
+        String[] strArr = my_string.split("");
 
         for (int[] query : queries) {
-            int[] temp = Arrays.copyOfRange(arr, query[0], query[1] + 1);
+//            boolean queryOdd = (query[1] - query[0] + 1) % 2 == 1; // 홀수면 중간 숫자 있음
+            int changeIdx = (query[1] + query[0]) / 2;
+            int j = query[0];
 
-            int min = 1_000_001;
+            for (int i=query[1];i> changeIdx;i--) {
+                String temp = strArr[i];
+                strArr[i] = strArr[j];
+                strArr[j] = temp;
 
-            for (int i = 0; i < temp.length; i++) {
-                if (query[2] < temp[i]) {
-                    min = Math.min(min, temp[i]);
-                }
+                j++;
+
+                // 중간값은 굳이 계산 안해도 되겠구나
+                /*if(queryOdd && (i + 1) == changeIdx) {
+                    strArr[i+1] = strArr[i+1];
+                }*/
             }
-            answer[j] = min == 1_000_001 ? -1 : min;
-            j++;
         }
 
-        return answer;
+        // strArr => [p, r, o, g, r, a, m, m, e, r, s]
+//        return Arrays.stream(strArr).collect(Collectors.joining());
+        return String.join("", strArr);
     }
 }
