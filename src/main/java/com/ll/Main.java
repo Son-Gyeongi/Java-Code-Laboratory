@@ -1,21 +1,42 @@
 package com.ll;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[][] queries = {{2, 3}, {0, 7}, {5, 9}, {6, 10}};
-        System.out.println(s.solution("rermgorpsam", queries));
+//        int[] sides = {1, 2};
+//        int[] sides = {3, 6};
+//        int[] sides = {11, 7};
+        int[] sides = {1000, 1000};
+        System.out.println(s.solution(sides));
     }
 }
 
 class Solution {
-    public String solution(String myString, int[][] queries) {
-        for (int[] arr : queries) {
-            myString = myString.substring(0, arr[0])
-                    + new StringBuilder(myString.substring(arr[0], arr[1] + 1))
-                    .reverse().toString()
-                    + myString.substring(arr[1] + 1);
+    public int solution(int[] sides) {
+        Set<Integer> set = new HashSet<>();
+
+        // sides 배열 중에서 가장 긴 변일 경우
+        int max = Math.max(sides[0], sides[1]);
+        int min = Math.min(sides[0], sides[1]);
+
+        for (int i=1;i<=max;i++){
+            if ((max - min) < i) {
+                set.add(i);
+            }
         }
-        return myString;
+
+        // N 미지수가 가장 긴 변일 경우
+        int sum = sides[0] + sides[1];
+
+        for (int i=1;i<sum;i++){
+            if (max < i) {
+                set.add(i);
+            }
+        }
+
+        return set.size();
     }
 }
