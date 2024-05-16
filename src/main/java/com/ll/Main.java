@@ -1,42 +1,30 @@
 package com.ll;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.math.BigInteger;
 
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-//        int[] sides = {1, 2};
-//        int[] sides = {3, 6};
-//        int[] sides = {11, 7};
-        int[] sides = {1000, 1000};
-        System.out.println(s.solution(sides));
+        System.out.println(s.solution(3, 2));
     }
 }
 
 class Solution {
-    public int solution(int[] sides) {
-        Set<Integer> set = new HashSet<>();
+    public BigInteger solution(int balls, int share) {
+        BigInteger answer;
 
-        // sides 배열 중에서 가장 긴 변일 경우
-        int max = Math.max(sides[0], sides[1]);
-        int min = Math.min(sides[0], sides[1]);
+        answer = factorial(balls).divide(factorial(balls - share).multiply(factorial(share)));
 
-        for (int i=1;i<=max;i++){
-            if ((max - min) < i) {
-                set.add(i);
-            }
+        return answer;
+    }
+
+    public static BigInteger factorial(int num) {
+        BigInteger sum = new BigInteger("1");
+
+        for (int i=num;i>=1;i--) {
+            sum = sum.multiply(new BigInteger(String.valueOf(i)));
         }
 
-        // N 미지수가 가장 긴 변일 경우
-        int sum = sides[0] + sides[1];
-
-        for (int i=1;i<sum;i++){
-            if (max < i) {
-                set.add(i);
-            }
-        }
-
-        return set.size();
+        return sum;
     }
 }
