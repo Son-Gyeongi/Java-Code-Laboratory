@@ -1,30 +1,40 @@
 package com.ll;
 
-import java.math.BigInteger;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.solution(3, 2));
+//        String[] keyinput = {"left", "right", "up", "right", "right"};
+        String[] keyinput = {"down", "down", "down", "down", "down"};
+//        int[] board = {11, 11};
+        int[] board = {7, 9};
+        System.out.println(Arrays.toString(s.solution(keyinput, board)));
     }
 }
 
 class Solution {
-    public BigInteger solution(int balls, int share) {
-        BigInteger answer;
+    public int[] solution(String[] keyinput, int[] board) {
+        int[] answer = new int[2];
+        int width = board[0]/2;
+        int height = board[1]/2;
 
-        answer = factorial(balls).divide(factorial(balls - share).multiply(factorial(share)));
+        for (String s : keyinput) {
 
-        return answer;
-    }
-
-    public static BigInteger factorial(int num) {
-        BigInteger sum = new BigInteger("1");
-
-        for (int i=num;i>=1;i--) {
-            sum = sum.multiply(new BigInteger(String.valueOf(i)));
+            if (s.equals("left") && -width < answer[0]) {
+                answer[0] -= 1;
+            }
+            if (s.equals("right") && answer[0] < width) {
+                answer[0] += 1;
+            }
+            if (s.equals("down") && -height < answer[1]) {
+                answer[1] -= 1;
+            }
+            if (s.equals("up") && answer[1] < height) {
+                answer[1] += 1;
+            }
         }
 
-        return sum;
+        return answer;
     }
 }
