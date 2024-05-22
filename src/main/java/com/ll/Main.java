@@ -5,36 +5,32 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-//        String[] keyinput = {"left", "right", "up", "right", "right"};
-        String[] keyinput = {"down", "down", "down", "down", "down"};
-//        int[] board = {11, 11};
-        int[] board = {7, 9};
-        System.out.println(Arrays.toString(s.solution(keyinput, board)));
+//        String[] spell = {"s", "o", "m", "d"};
+        String[] spell = {"z", "d", "x"};
+//        String[] dic = {"moos", "dzx", "smm", "sunmmo", "som"};
+        String[] dic = {"def", "dww", "dzx", "loveaw"};
+        System.out.println(s.solution(spell, dic));
     }
 }
 
 class Solution {
-    public int[] solution(String[] keyinput, int[] board) {
-        int[] answer = new int[2];
-        int width = board[0]/2;
-        int height = board[1]/2;
+    public int solution(String[] spell, String[] dic) {
+        int answer = 0;
 
-        for (String s : keyinput) {
+        // dic 배열에 spell 배열의 길이와 다른 거는 거르기
+        String[] filteredDic = Arrays.stream(dic).filter(d -> d.length() == spell.length).toArray(String[]::new);
+        if (filteredDic.length == 0) return 2;
 
-            if (s.equals("left") && -width < answer[0]) {
-                answer[0] -= 1;
+        // filteredDic 원소마다 spell 각 원소 다 있는지 확인하기
+        for (int i = 0; i < filteredDic.length; i++) {
+            int count = 0;
+            for (int j = 0; j < spell.length; j++) {
+                if (filteredDic[i].contains(spell[j])) count += 1;
             }
-            if (s.equals("right") && answer[0] < width) {
-                answer[0] += 1;
-            }
-            if (s.equals("down") && -height < answer[1]) {
-                answer[1] -= 1;
-            }
-            if (s.equals("up") && answer[1] < height) {
-                answer[1] += 1;
-            }
+
+            answer += (count == spell.length) ? 1 : 0;
         }
 
-        return answer;
+        return answer > 0 ? 1 : 2;
     }
 }
