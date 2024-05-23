@@ -5,32 +5,45 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-//        String[] spell = {"s", "o", "m", "d"};
-        String[] spell = {"z", "d", "x"};
-//        String[] dic = {"moos", "dzx", "smm", "sunmmo", "som"};
-        String[] dic = {"def", "dww", "dzx", "loveaw"};
-        System.out.println(s.solution(spell, dic));
+//        int[] rank = {3, 7, 2, 5, 4, 6, 1};
+        int[] rank = {6, 1, 5, 2, 3, 4};
+//        boolean[] attendance = {false, true, true, true, true, false, false};
+        boolean[] attendance = {true, false, true, false, false, true};
+        System.out.println(s.solution(rank, attendance));
     }
 }
 
 class Solution {
-    public int solution(String[] spell, String[] dic) {
+    public int solution(int[] rank, boolean[] attendance) {
         int answer = 0;
+        int[] finalRank = new int[rank.length];
 
-        // dic 배열에 spell 배열의 길이와 다른 거는 거르기
-        String[] filteredDic = Arrays.stream(dic).filter(d -> d.length() == spell.length).toArray(String[]::new);
-        if (filteredDic.length == 0) return 2;
-
-        // filteredDic 원소마다 spell 각 원소 다 있는지 확인하기
-        for (int i = 0; i < filteredDic.length; i++) {
-            int count = 0;
-            for (int j = 0; j < spell.length; j++) {
-                if (filteredDic[i].contains(spell[j])) count += 1;
-            }
-
-            answer += (count == spell.length) ? 1 : 0;
+        for (int i=0;i<rank.length;i++) {
+            if (attendance[i]) finalRank[i] = rank[i];
+            else finalRank[i] = -1;
         }
 
-        return answer > 0 ? 1 : 2;
+        System.out.println(Arrays.toString(finalRank));
+
+        int count = 0;
+        for (int i=0;i<=100;i++) {
+            for (int j=0;j<finalRank.length;j++) {
+                if(i == finalRank[j] && count == 0) {
+                    answer += (10000 * j);
+                    count++;
+                } else if(i == finalRank[j] && count == 1) {
+                    answer += (100 * j);
+                    count++;
+                } else if(i == finalRank[j] && count == 2) {
+                    answer += j;
+                    count++;
+                    break;
+                }
+
+                if (count == 3) break;
+            }
+        }
+
+        return answer;
     }
 }
