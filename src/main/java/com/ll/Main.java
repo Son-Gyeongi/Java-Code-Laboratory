@@ -1,31 +1,40 @@
 package com.ll;
 
+import java.util.Arrays;
+
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.solution(73));
+        int[] numlist = {10000, 20, 36, 47, 40, 6, 10, 7000};
+        System.out.println(Arrays.toString(s.solution(numlist, 30)));
     }
 }
 
 class Solution {
-    public int solution(int n) {
-        int answer = 0;
+    public int[] solution(int[] numlist, int n) {
+        int[] answer = new int[numlist.length];
+        int[] temp = new int[numlist.length];
 
-        for (int i=1;i<=n;i++) {
+        for (int i=0;i<numlist.length;i++) {
+            temp[i] = Math.abs(n-numlist[i]);
+        }
 
-            answer++;
-
-            while (answer %3 == 0 && answer > 0) answer++;
-
-            // 문자열로 3 포함하는지 보기
-            String str = String.valueOf(answer);
-            while(str.contains("3")) {
-                answer++;
-                str = String.valueOf(answer);
+        int idx = 0;
+        for (int i=0;i<=10000;i++) {
+            int count = 0;
+            for (int j=0;j<numlist.length;j++) {
+                if (i == temp[j]) {
+                    answer[idx] = numlist[j];
+                    idx++;
+                    count++;
+                }
+                if (count > 1) {
+                    int max = Math.max(answer[idx-2], answer[idx-1]);
+                    int min = Math.min(answer[idx-2], answer[idx-1]);
+                    answer[idx-2] = max;
+                    answer[idx-1] = min;
+                }
             }
-
-            while (answer %3 == 0 && answer > 0) answer++;
-            // System.out.printf("%d ==> %d\n", i, answer);
         }
 
         return answer;
