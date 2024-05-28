@@ -1,41 +1,36 @@
 package com.ll;
 
-import java.util.Arrays;
-
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[] numlist = {10000, 20, 36, 47, 40, 6, 10, 7000};
-        System.out.println(Arrays.toString(s.solution(numlist, 30)));
+        System.out.println(s.solution("3x + 7 + x"));
+        System.out.println(s.solution("x + x + x"));
+        System.out.println(s.solution(	"1 + 3 + 4"));
     }
 }
 
 class Solution {
-    public int[] solution(int[] numlist, int n) {
-        int[] answer = new int[numlist.length];
-        int[] temp = new int[numlist.length];
+    public String solution(String polynomial) {
+        String answer = "";
 
-        for (int i=0;i<numlist.length;i++) {
-            temp[i] = Math.abs(n-numlist[i]);
-        }
+        String[] strPol = polynomial.split(" \\+ "); // 더하기 이스케이프하기
 
-        int idx = 0;
-        for (int i=0;i<=10000;i++) {
-            int count = 0;
-            for (int j=0;j<numlist.length;j++) {
-                if (i == temp[j]) {
-                    answer[idx] = numlist[j];
-                    idx++;
-                    count++;
-                }
-                if (count > 1) {
-                    int max = Math.max(answer[idx-2], answer[idx-1]);
-                    int min = Math.min(answer[idx-2], answer[idx-1]);
-                    answer[idx-2] = max;
-                    answer[idx-1] = min;
-                }
+        int linearTerm = 0;
+        int constant = 0;
+        for (int i=0;i<strPol.length;i++) {
+            if (strPol[i].contains("x")) {
+                String[] xSpl = strPol[i].split("x");
+                if (xSpl.length == 0) linearTerm += 1;
+                else linearTerm += Integer.parseInt(xSpl[0]);
+            } else {
+                constant += Integer.parseInt(strPol[i]);
             }
         }
+
+        if (linearTerm == 0) answer += constant;
+        else if (linearTerm == 1) answer = constant == 0 ? "x" : "x + " +constant;
+        else if (constant == 0) answer = linearTerm + "x";
+        else answer = linearTerm + "x + " + constant;
 
         return answer;
     }
