@@ -1,37 +1,48 @@
 package com.ll;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.solution("3x + 7 + x"));
-        System.out.println(s.solution("x + x + x"));
-        System.out.println(s.solution(	"1 + 3 + 4"));
+        System.out.println(Arrays.toString(s.solution(5, 555)));
     }
 }
 
 class Solution {
-    public String solution(String polynomial) {
-        String answer = "";
+    public int[] solution(int l, int r) {
+        // int[] answer = {};
+        List<Integer> answer = new ArrayList<>();
 
-        String[] strPol = polynomial.split(" \\+ "); // 더하기 이스케이프하기
+        for (int i=l;i<=r;i++) {
+            String str = String.valueOf(i);
 
-        int linearTerm = 0;
-        int constant = 0;
-        for (int i=0;i<strPol.length;i++) {
-            if (strPol[i].contains("x")) {
-                String[] xSpl = strPol[i].split("x");
-                if (xSpl.length == 0) linearTerm += 1;
-                else linearTerm += Integer.parseInt(xSpl[0]);
-            } else {
-                constant += Integer.parseInt(strPol[i]);
-            }
+            if (str.contains("0")
+                    && str.contains("5")
+                    && !str.contains("1")
+                    && !str.contains("2")
+                    && !str.contains("3")
+                    && !str.contains("4")
+                    && !str.contains("6")
+                    && !str.contains("7")
+                    && !str.contains("8")
+                    && !str.contains("9")) answer.add(i);
+            else if (str.contains("5")
+                    && !str.contains("1")
+                    && !str.contains("2")
+                    && !str.contains("3")
+                    && !str.contains("4")
+                    && !str.contains("6")
+                    && !str.contains("7")
+                    && !str.contains("8")
+                    && !str.contains("9")) answer.add(i);
         }
 
-        if (linearTerm == 0) answer += constant;
-        else if (linearTerm == 1) answer = constant == 0 ? "x" : "x + " +constant;
-        else if (constant == 0) answer = linearTerm + "x";
-        else answer = linearTerm + "x + " + constant;
+        System.out.println(answer);
+        if (answer.isEmpty()) return new int[]{-1};
 
-        return answer;
+        return answer.stream().mapToInt(Integer::intValue).toArray();
     }
 }
