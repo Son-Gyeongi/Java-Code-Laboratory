@@ -1,48 +1,43 @@
 package com.ll;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(Arrays.toString(s.solution(5, 555)));
+        int[] array = {1, 2, 3, 3, 3, 4};
+        System.out.println(s.solution(array));
     }
 }
 
 class Solution {
-    public int[] solution(int l, int r) {
-        // int[] answer = {};
-        List<Integer> answer = new ArrayList<>();
+    public int solution(int[] array) {
+        int answer = 0;
 
-        for (int i=l;i<=r;i++) {
-            String str = String.valueOf(i);
+        int[] numArr = new int[1000];
 
-            if (str.contains("0")
-                    && str.contains("5")
-                    && !str.contains("1")
-                    && !str.contains("2")
-                    && !str.contains("3")
-                    && !str.contains("4")
-                    && !str.contains("6")
-                    && !str.contains("7")
-                    && !str.contains("8")
-                    && !str.contains("9")) answer.add(i);
-            else if (str.contains("5")
-                    && !str.contains("1")
-                    && !str.contains("2")
-                    && !str.contains("3")
-                    && !str.contains("4")
-                    && !str.contains("6")
-                    && !str.contains("7")
-                    && !str.contains("8")
-                    && !str.contains("9")) answer.add(i);
+        // numArr 배열에 array 배열 값을 인덱스에 맞춰서 넣기
+        for (int i=0;i<numArr.length;i++) {
+            for (int j=0;j<array.length;j++) {
+                if (i == array[j]) {
+                    numArr[i] += 1;
+                }
+            }
         }
 
-        System.out.println(answer);
-        if (answer.isEmpty()) return new int[]{-1};
+        // numArr에서 Max 값 찾고 해당 인덱스 알아내기
+        int max = Arrays.stream(numArr).max().getAsInt();
 
-        return answer.stream().mapToInt(Integer::intValue).toArray();
+        int count = 0;
+        for (int i = 0; i < numArr.length; i++) {
+            if (numArr[i] == max) {
+                answer = i;
+                count++;
+            }
+        }
+
+        if (count > 1) answer = -1;
+
+        return answer;
     }
 }
