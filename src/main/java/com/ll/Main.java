@@ -1,43 +1,33 @@
 package com.ll;
 
-import java.util.Arrays;
-
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[] array = {1, 2, 3, 3, 3, 4};
-        System.out.println(s.solution(array));
+//        int[] food = {1, 3, 4, 6};
+        int[] food = {1, 7, 1, 2};
+        System.out.println(s.solution(food));
     }
 }
 
 class Solution {
-    public int solution(int[] array) {
-        int answer = 0;
+    public String solution(int[] food) {
+        StringBuilder answer = new StringBuilder();
 
-        int[] numArr = new int[1000];
+        for (int i=1;i<food.length;i++) {
+            int count;
+            if (food[i] > 1) {
+                count = food[i]/2;
 
-        // numArr 배열에 array 배열 값을 인덱스에 맞춰서 넣기
-        for (int i=0;i<numArr.length;i++) {
-            for (int j=0;j<array.length;j++) {
-                if (i == array[j]) {
-                    numArr[i] += 1;
+                for (int j=0;j<count;j++) {
+                    answer.append(i);
                 }
+                // answer.append(String.valueOf(i).repeat(Math.max(0, count))); 위 for문과 같다.
             }
         }
 
-        // numArr에서 Max 값 찾고 해당 인덱스 알아내기
-        int max = Arrays.stream(numArr).max().getAsInt();
+        String string = answer.toString();
+        String reverse = answer.reverse().toString();
 
-        int count = 0;
-        for (int i = 0; i < numArr.length; i++) {
-            if (numArr[i] == max) {
-                answer = i;
-                count++;
-            }
-        }
-
-        if (count > 1) answer = -1;
-
-        return answer;
+        return string + "0" + reverse;
     }
 }
