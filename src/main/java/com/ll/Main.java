@@ -1,33 +1,51 @@
 package com.ll;
 
+import java.util.Arrays;
+
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-//        int[] food = {1, 3, 4, 6};
-        int[] food = {1, 7, 1, 2};
-        System.out.println(s.solution(food));
+        int[][] lines = {{0, 1}, {2, 5}, {3, 9}};
+        System.out.println(s.solution(lines));
     }
 }
 
+import java.util.*;
+
 class Solution {
-    public String solution(int[] food) {
-        StringBuilder answer = new StringBuilder();
+    public int solution(int[][] lines) {
+        int answer = 0;
 
-        for (int i=1;i<food.length;i++) {
-            int count;
-            if (food[i] > 1) {
-                count = food[i]/2;
+        // lines[][0]를 확인해서 순서대로 정렬하기
+        Arrays.sort(lines, (a, b) -> Integer.compare(a[0], b[0]));
 
-                for (int j=0;j<count;j++) {
-                    answer.append(i);
+        // 2개 좌표 중 시작점의 큰 수, 끝점의 작은 수
+        for (int i=0;i<lines.length-1;i++) {
+            int start = 0;
+            int end = 0;
+            for (int j=i+1;j<lines.length;j++) {
+                // 안 겹치는 좌표 필터
+                if ((lines[i][0] < lines[j][0]) && (lines[i][1] < lines[j][0])) continue;
+
+                start = lines[i][0] > lines[j][0] ? lines[i][0] : lines[j][0];
+                end = lines[i][1] > lines[j][1] ? lines[j][1] : lines[i][1];
+
+                answer += Math.abs(end-start);
+
+                // 중복되는 구간 검색에서 제외
+                int tmp = lines[i][1];
+                lines[i][1] = lines[j][0];
+                lines[j][0] = tmp;
+
+                // [7, 5] 경우 위치 바꾸기 [5, 7]로
+                if (lines[j][0] > lines[j][1]) {
+                    int temp = lines[j][1];
+                    lines[j][1] = lines[j][0];
+                    lines[j][0] = temp;
                 }
-                // answer.append(String.valueOf(i).repeat(Math.max(0, count))); 위 for문과 같다.
             }
         }
 
-        String string = answer.toString();
-        String reverse = answer.reverse().toString();
-
-        return string + "0" + reverse;
+        return answer;
     }
 }
