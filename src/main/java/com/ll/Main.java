@@ -1,51 +1,22 @@
 package com.ll;
 
-import java.util.Arrays;
-
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[][] lines = {{0, 1}, {2, 5}, {3, 9}};
-        System.out.println(s.solution(lines));
+        System.out.println(s.solution("Progra21Sremm3", 6, 12));
     }
 }
 
-import java.util.*;
-
 class Solution {
-    public int solution(int[][] lines) {
-        int answer = 0;
+    public String solution(String my_string, int s, int e) {
+        String a = my_string.substring(0, s); // 0부터 s-1까지
 
-        // lines[][0]를 확인해서 순서대로 정렬하기
-        Arrays.sort(lines, (a, b) -> Integer.compare(a[0], b[0]));
+        String b = my_string.substring(s, e + 1); // s부터 e까지
+        StringBuilder sb = new StringBuilder(b);
+        String reverse = sb.reverse().toString();
 
-        // 2개 좌표 중 시작점의 큰 수, 끝점의 작은 수
-        for (int i=0;i<lines.length-1;i++) {
-            int start = 0;
-            int end = 0;
-            for (int j=i+1;j<lines.length;j++) {
-                // 안 겹치는 좌표 필터
-                if ((lines[i][0] < lines[j][0]) && (lines[i][1] < lines[j][0])) continue;
+        String c = my_string.substring(e+1); // e+1 부터 끝까지
 
-                start = lines[i][0] > lines[j][0] ? lines[i][0] : lines[j][0];
-                end = lines[i][1] > lines[j][1] ? lines[j][1] : lines[i][1];
-
-                answer += Math.abs(end-start);
-
-                // 중복되는 구간 검색에서 제외
-                int tmp = lines[i][1];
-                lines[i][1] = lines[j][0];
-                lines[j][0] = tmp;
-
-                // [7, 5] 경우 위치 바꾸기 [5, 7]로
-                if (lines[j][0] > lines[j][1]) {
-                    int temp = lines[j][1];
-                    lines[j][1] = lines[j][0];
-                    lines[j][0] = temp;
-                }
-            }
-        }
-
-        return answer;
+        return a + reverse + c;
     }
 }
