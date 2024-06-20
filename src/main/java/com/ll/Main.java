@@ -1,48 +1,36 @@
 package com.ll;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.solution("abcabcadc"));
-        System.out.println(s.solution("abdc"));
-        System.out.println(s.solution("hello"));
+        String[] picture = {".xx...xx.", "x..x.x..x", "x...x...x", ".x.....x.", "..x...x..", "...x.x...", "....x...."};
+        System.out.println(Arrays.toString(s.solution(picture, 2)));
     }
 }
 
 class Solution {
-    public String solution(String s) {
-        String answer = "";
-        String[] str = s.split("");
+    public String[] solution(String[] picture, int k) {
+        String[] answer = new String[picture.length*k];
 
-        Map<String, Integer> map = new HashMap<>();
+        int x=0;
+        int increase = k;
+        for (int i=0;i<picture.length;i++) {
+            System.out.println("i = "+i);
+            String temp = "";
+            String[] picArr = picture[i].split("");
 
-        for (String string : str) {
-            // 값이 있으면
-            if (map.containsKey(string)) {
-                Integer count = map.get(string);
-                map.put(string, ++count);
-            } else {
-                // 값이 없으면
-                map.put(string, 1);
+            for (int j=0;j<picArr.length;j++) {
+                temp += picArr[j].repeat(k);
             }
+
+            for (;x<increase;x++) {
+                answer[x] = temp;
+            }
+            increase+=k;
         }
 
-        for (String string : str) {
-            Integer count = map.get(string);
-
-            if (count == 1) {
-                answer += string;
-            }
-        }
-
-        // answer 영어 오름차순으로 정렬
-        String[] strSplit = answer.split("");
-        Arrays.sort(strSplit);
-
-        return String.join("", strSplit);
+        return answer;
     }
 }
