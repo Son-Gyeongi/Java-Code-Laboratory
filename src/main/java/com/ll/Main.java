@@ -5,33 +5,86 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[][] dots = {{1, 4}, {9, 2}, {3, 8}, {11, 6}};
-        System.out.println(s.solution(dots));
+        System.out.println(Arrays.deepToString(s.solution(4)));
     }
 }
 
 class Solution {
-    public int solution(int[][] dots) {
-        int answer = 0;
+    public int[][] solution(int n) {
+        int[][] answer = new int[n][n];
+        int column = n; // 열 → 오른쪽 화살표 계산
+        int row = n; // 행 ↓ 아래쪽 화살표 계산
+        int firstColumn = 0; // 열 ← 왼쪽 화살표 계산
+        int firstRow = 0; // 행 ↑ 위쪽 화살표 계산
+        int count = 1;
+        int x = 0; // answer[x][y]
+        int y = 0;
 
-        // 0,1,2,3 은 dots의 인덱스를 말함
-        // 좌표 0,1 와 2,3 일 경우
-        if ((dots[1][0] - dots[0][0] == dots[3][0] - dots[2][0])
-                && (dots[1][1] - dots[0][1] == dots[3][1] - dots[2][1])) return 1;
-        else if (((double)(dots[1][1] - dots[0][1])/(dots[1][0] - dots[0][0]))
-                == ((double)(dots[3][1] - dots[2][1]) / (dots[3][0] - dots[2][0]))) return 1;
+        // right, left 결정
+        boolean rlSwitch = true; // true일 경우 오른쪽으로 false일 경우 왼쪽으로
+        // up, down 결정
+        boolean udSwitch = true; // true일 경우 아래쪽으로 false일 경우 위쪽으로
 
-        // 좌표 0,2 와 1,3 일 경우
-        if ((dots[2][0] - dots[0][0] == dots[3][0] - dots[1][0])
-                && (dots[2][1] - dots[0][1] == dots[3][1] - dots[1][1])) return 1;
-        else if (((double)(dots[2][1] - dots[0][1])/(dots[2][0] - dots[0][0]))
-                == ((double)(dots[3][1] - dots[1][1]) / (dots[3][0] - dots[1][0]))) return 1;
 
-        // 좌표 0,3 와 1,2 일 경우
-        if ((dots[3][0] - dots[0][0] == dots[2][0] - dots[1][0])
-                && (dots[3][1] - dots[0][1] == dots[2][1] - dots[1][1])) return 1;
-        else if (((double)(dots[3][1] - dots[0][1])/(dots[3][0] - dots[0][0]))
-                == ((double)(dots[2][1] - dots[1][1]) / (dots[2][0] - dots[1][0]))) return 1;
+        while(true) {
+            if (rlSwitch) {
+                // →
+                for (int i=y;i<column;i++) {
+                    answer[x][i] = count;
+                    count++;
+                    y = i;
+                }
+                x += 1;
+                System.out.printf("x = %d, y = %d\n", x, y);
+                rlSwitch = false;
+                column--;
+            }
+
+            if (udSwitch) {
+                // ↓
+                for (int i=x;i<row;i++) {
+                    answer[i][y] = count;
+                    count++;
+                    x = i;
+                }
+                y -= 1;
+                System.out.printf("x = %d, y = %d\n", x, y);
+                udSwitch = false;
+                row--;
+            }
+
+            if (!rlSwitch) {
+                // ←
+                for (int i=y;i>=firstColumn;i--) {
+                    answer[x][i] = count;
+                    count++;
+                    y = i;
+                }
+                x -= 1;
+                System.out.printf("x = %d, y = %d\n", x, y);
+                rlSwitch = true;
+                firstColumn++;
+            }
+
+            if (!udSwitch) {
+                // ↑
+                for (int i=x;i>firstRow;i--) {
+                    answer[i][y] = count;
+                    count++;
+                    x = i;
+                }
+                y += 1;
+                System.out.printf("x = %d, y = %d\n", x, y);
+                udSwitch = true;
+                firstRow++;
+            }
+
+            System.out.println(Arrays.deepToString(answer));
+
+            if (count == n * n + 1) break;
+        }
+
+        System.out.println(Arrays.deepToString(answer));
 
         return answer;
     }
