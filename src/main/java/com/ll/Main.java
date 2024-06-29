@@ -1,91 +1,36 @@
 package com.ll;
 
-import java.util.Arrays;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(Arrays.deepToString(s.solution(4)));
+        int[] numbers = {2,1,3,4,1};
+        System.out.println(Arrays.toString(s.solution(numbers)));
     }
 }
 
 class Solution {
-    public int[][] solution(int n) {
-        int[][] answer = new int[n][n];
-        int column = n; // 열 → 오른쪽 화살표 계산
-        int row = n; // 행 ↓ 아래쪽 화살표 계산
-        int firstColumn = 0; // 열 ← 왼쪽 화살표 계산
-        int firstRow = 0; // 행 ↑ 위쪽 화살표 계산
-        int count = 1;
-        int x = 0; // answer[x][y]
-        int y = 0;
+    public int[] solution(int[] numbers) {
+        List<Integer> answer = new ArrayList<>();
+        Integer[] temp = {};
 
-        // right, left 결정
-        boolean rlSwitch = true; // true일 경우 오른쪽으로 false일 경우 왼쪽으로
-        // up, down 결정
-        boolean udSwitch = true; // true일 경우 아래쪽으로 false일 경우 위쪽으로
+        // TreeSet 중복 없고 오름차순으로 저장
+        Set<Integer> set = new TreeSet<>();
 
-
-        while(true) {
-            if (rlSwitch) {
-                // →
-                for (int i=y;i<column;i++) {
-                    answer[x][i] = count;
-                    count++;
-                    y = i;
-                }
-                x += 1;
-                System.out.printf("x = %d, y = %d\n", x, y);
-                rlSwitch = false;
-                column--;
+        for (int i=0;i<numbers.length-1;i++) {
+            for (int j=i+1;j<numbers.length;j++) {
+                set.add(numbers[i]+numbers[j]);
             }
-
-            if (udSwitch) {
-                // ↓
-                for (int i=x;i<row;i++) {
-                    answer[i][y] = count;
-                    count++;
-                    x = i;
-                }
-                y -= 1;
-                System.out.printf("x = %d, y = %d\n", x, y);
-                udSwitch = false;
-                row--;
-            }
-
-            if (!rlSwitch) {
-                // ←
-                for (int i=y;i>=firstColumn;i--) {
-                    answer[x][i] = count;
-                    count++;
-                    y = i;
-                }
-                x -= 1;
-                System.out.printf("x = %d, y = %d\n", x, y);
-                rlSwitch = true;
-                firstColumn++;
-            }
-
-            if (!udSwitch) {
-                // ↑
-                for (int i=x;i>firstRow;i--) {
-                    answer[i][y] = count;
-                    count++;
-                    x = i;
-                }
-                y += 1;
-                System.out.printf("x = %d, y = %d\n", x, y);
-                udSwitch = true;
-                firstRow++;
-            }
-
-            System.out.println(Arrays.deepToString(answer));
-
-            if (count == n * n + 1) break;
         }
 
-        System.out.println(Arrays.deepToString(answer));
+        // Integer -> int 타입으로 바꾸기
+        temp = set.toArray(temp);
 
-        return answer;
+        for (int i=0;i<temp.length;i++) {
+            answer.add(temp[i]);
+        }
+
+        return answer.stream().mapToInt(s -> s).toArray();
     }
 }
