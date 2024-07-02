@@ -1,8 +1,6 @@
 package com.ll;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -24,18 +22,20 @@ class Solution {
             int count = 0;
             // 2. strings 배열에서 각 요소들 중에 n인덱스랑 맞는 a-z 찾고 stringList에 넣기
             List<String> tempList = new ArrayList<>();
-            for (int i=0;i<strings.length;i++) {
-                if (start == strings[i].charAt(n)) { // 3. 같은 값일 경우 비교 후에 넣기
-                    tempList.add(strings[i]);
+            for (String string : strings) {
+                if (start == string.charAt(n)) { // 3. 같은 값일 경우 비교 후에 넣기
+                    tempList.add(string);
                     count++;
                 }
             }
 
             // tempList 정렬
-            List<String> sortedList = tempList.stream().sorted().toList();
+//            List<String> sortedList = tempList.stream().sorted().toList(); // 자바 16에서 추가된 것, 오름차순
+//            Collections.sort(tempList); // 오름차순
+            tempList.sort(Comparator.naturalOrder()); // 자바 8에서 추가된 것, 오름차순
             // amswer 에 값 넣기
-            for (int i=0;i<sortedList.size();i++) {
-                answer[index++] = sortedList.get(i);
+            for (int i=0;i<tempList.size();i++) {
+                answer[index++] = tempList.get(i);
             }
         }
 
