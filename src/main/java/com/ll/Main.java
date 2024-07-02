@@ -1,36 +1,44 @@
 package com.ll;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[] numbers = {2,1,3,4,1};
-        System.out.println(Arrays.toString(s.solution(numbers)));
+//        String[] strings = {"abce", "abcd", "cdx"}; // 2
+//        String[] strings = {"sun", "bed", "car"}; // 1
+        String[] strings = {"ae", "be", "ce", "ae"}; // 1
+        System.out.println(Arrays.toString(s.solution(strings, 1)));
     }
 }
 
 class Solution {
-    public int[] solution(int[] numbers) {
-        List<Integer> answer = new ArrayList<>();
-        Integer[] temp = {};
+    public String[] solution(String[] strings, int n) {
+        String[] answer = new String[strings.length];
+        int index = 0;
 
-        // TreeSet 중복 없고 오름차순으로 저장
-        Set<Integer> set = new TreeSet<>();
+        // 1. a-z까지 반복문 돌리기
+        for (char start='a';start<='z';start++) {
+            int count = 0;
+            // 2. strings 배열에서 각 요소들 중에 n인덱스랑 맞는 a-z 찾고 stringList에 넣기
+            List<String> tempList = new ArrayList<>();
+            for (int i=0;i<strings.length;i++) {
+                if (start == strings[i].charAt(n)) { // 3. 같은 값일 경우 비교 후에 넣기
+                    tempList.add(strings[i]);
+                    count++;
+                }
+            }
 
-        for (int i=0;i<numbers.length-1;i++) {
-            for (int j=i+1;j<numbers.length;j++) {
-                set.add(numbers[i]+numbers[j]);
+            // tempList 정렬
+            List<String> sortedList = tempList.stream().sorted().toList();
+            // amswer 에 값 넣기
+            for (int i=0;i<sortedList.size();i++) {
+                answer[index++] = sortedList.get(i);
             }
         }
 
-        // Integer -> int 타입으로 바꾸기
-        temp = set.toArray(temp);
-
-        for (int i=0;i<temp.length;i++) {
-            answer.add(temp[i]);
-        }
-
-        return answer.stream().mapToInt(s -> s).toArray();
+        return answer;
     }
 }
