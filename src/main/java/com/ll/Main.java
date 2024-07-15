@@ -5,43 +5,45 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        String[] cards1 = {"i", "drink", "water"};
-        String[] cards2 = {"want", "to"};
-        String[] goal = {"i", "want", "to", "drink", "water"};
-        System.out.println(s.solution(cards1, cards2, goal));
+//        int[] section = {2, 3, 6};
+        int[] section = {1, 2, 3, 4};
+        System.out.println(s.solution(4, 1, section));
     }
 }
 
 class Solution {
-    public String solution(String[] cards1, String[] cards2, String[] goal) {
-        /*
-        Queue<String> queue1 = new LinkedList<>();
-        for (int i=0;i<cards1.length;i++) {
-            queue1.add(cards1[i]);
-        }
-        */
-        Queue<String> queue1 = new LinkedList<>(Arrays.asList(cards1));
+    public int solution(int n, int m, int[] section) {
+        int answer = 0;
+        boolean[] wall = new boolean[n];
 
-        /*
-        Queue<String> queue2 = new LinkedList<>();
-        for (int i=0;i<cards2.length;i++) {
-            queue2.add(cards2[i]);
-        }
-        */
-        Queue<String> queue2 = new LinkedList<>(Arrays.asList(cards2));
+        // 이해. n이 학교 벽 길이이고 다시 칠해야하는 구간이 section이고 m 길이만큼 연달아 칠할 수 있다.
 
-        for (String s : goal) {
-            String str1 = queue1.isEmpty() ? "" : queue1.peek();
-            String str2 = queue2.isEmpty() ? "" : queue2.peek();
-            if (str1.equals(s)) {
-                queue1.poll();
-            } else if (str2.equals(s)) {
-                queue2.poll();
-            } else {
-                return "No";
+        // 1. section에서 칠해진 부분 false로 바꾸기
+        for (int i=0;i<wall.length;i++) {
+            for (int j=0;j<section.length;j++) {
+                // i+1 이유 : 칠해지는 벽은 1부터
+                if (i+1 == section[j]) wall[i] = true;
             }
         }
 
-        return "Yes";
+        System.out.println(Arrays.toString(wall));
+
+        //  2. wall 배열에서 true인 것을 찾아서 m 길이만큼 false 해주기 그리고 다음 true를 찾고 반복
+        for (int i=0;i<wall.length;i++) {
+            if (wall[i]) {
+                int mLength = Math.min(i + m, wall.length);
+                for (int j=i;j<mLength;j++) {
+                    // mLength : j가 wall의 길이를 넘어서는 순간 반복문 빠져나오기
+
+                    wall[j] = false;
+                }
+
+                answer++; // 칠하는 횟수
+            }
+        }
+
+        System.out.println(Arrays.toString(wall));
+
+        return answer;
     }
 }
