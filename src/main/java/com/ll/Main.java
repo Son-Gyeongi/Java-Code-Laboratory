@@ -5,44 +5,94 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-//        int[] section = {2, 3, 6};
-        int[] section = {1, 2, 3, 4};
-        System.out.println(s.solution(4, 1, section));
+        String dartResult = "1S2D*3T";
+        System.out.println(s.solution(dartResult));
     }
 }
 
 class Solution {
-    public int solution(int n, int m, int[] section) {
+    public int solution(String dartResult) {
         int answer = 0;
-        boolean[] wall = new boolean[n];
+        String[] scores = new String[3]; // 계산해야할 점수 넣기
 
-        // 이해. n이 학교 벽 길이이고 다시 칠해야하는 구간이 section이고 m 길이만큼 연달아 칠할 수 있다.
+        // S는 점수의 1제곱, D는 점수의 2제곱, T는 점수의 3제곱
+        // * 은 이전 점수와, 현재 점수 각각 2배 (첫번째 점수에서 * 나올 시 2개 가능)
+        // # 이 나오면 -1을 점수에 곱하기
+        // 그러면 먼저 S,D,T를 계산 그 다음 * 계산, 그 다음 # 계산하고 합산하기
 
-        // 1. section에서 칠해진 부분 false로 바꾸기
-        for (int i=0;i<wall.length;i++) {
-            for (int j=0;j<section.length;j++) {
-                // i+1 이유 : 칠해지는 벽은 1부터
-                if (i+1 == section[j]) wall[i] = true;
+        String[] divide = dartResult.split(""); // 다트 관련 점수 모두 떨어뜨리기
+
+        // 1. 점수에 S, D, T 가 있는지 확인하기
+        int index = 0;
+        for (int i=0;i<divide.length;i++) {
+            if (divide[i].equals("S") || divide[i].equals("D") || divide[i].equals("T")) {
+                if (divide[i-1].equals("0") && divide[i-2].equals("1")) { // 점수가 10일 경우
+                    scores[index++] = divide[i-2] + divide[i-1] + divide[i];
+                } else scores[index++] = divide[i-1] + divide[i];
             }
         }
 
-        System.out.println(Arrays.toString(wall));
+        System.out.println(Arrays.toString(scores));
 
-        //  2. wall 배열에서 true인 것을 찾아서 m 길이만큼 false 해주기 그리고 다음 true를 찾고 반복
-        for (int i=0;i<wall.length;i++) {
-            if (wall[i]) {
-                int mLength = Math.min(i + m, wall.length);
-                for (int j=i;j<mLength;j++) {
-                    // mLength : j가 wall의 길이를 넘어서는 순간 반복문 빠져나오기
-
-                    wall[j] = false;
-                }
-
-                answer++; // 칠하는 횟수
+        // 2. 점수에 * 있는지 확인하기
+        index = 0;
+        for (int i=0;i<divide.length;i++) {
+            // TODO 첫번째 점수에서 *이 없으면 index 가 안 올라감
+            if (i > 5 && divide[i].equals("*")) {
+                scores[2] += "*";
+                scores[1] += "*";
+            } else if (i > 2 && divide[i].equals("*")) {
+                scores[1] += "*";
+                scores[0] += "*";
+            } else if (divide[i].equals("*")) {
+                scores[0] += "*";
             }
         }
 
-        System.out.println(Arrays.toString(wall));
+        System.out.println(Arrays.toString(scores));
+
+        // 3. 점수에 # 있는지 확인하기
+        for (int i=0;i<divide.length;i++) {
+            // TODO 첫번째 점수에서 #이 없으면 index 가 안 올라감
+            if (i > 5 && divide[i].equals("#")) {
+                scores[2] += "#";
+            } else if (i > 2 && divide[i].equals("#")) {
+                scores[1] += "#";
+            } else if (divide[i].equals("#")) {
+                scores[0] += "#";
+            }
+        }
+
+        System.out.println(Arrays.toString(scores));
+
+        // 4. scores 배열보고 값 계산하기
+        for (int i=0;i<scores.length;i++) {
+            String[] scoreStr = scores[i].split("");
+            System.out.println(Arrays.toString(scoreStr));
+            // 10점일 경우
+            int score = scoreStr[1].equals("0") ? 10 : Integer.parseInt(scoreStr[0]);
+
+            int temp = 0; // answer에 저장하기 전 임시 점수
+            // S는 점수의 1제곱, D는 점수의 2제곱, T는 점수의 3제곱
+            if (scores[i].contains("S")) temp = (int) Math.pow(score, 1);
+            else if (scores[i].contains("D")) temp = (int) Math.pow(score, 2);
+            else if (scores[i].contains("T")) temp = (int) Math.pow(score, 3);
+
+            System.out.println("temp = "+temp);
+
+            // * 는 하나당 곱하기2
+            if (scores[i].contains("**")) temp *= 4;
+            else if (scores[i].contains("*")) temp *= 2;
+
+            System.out.println("temp* = "+temp);
+
+            // # 은 -1
+            if (scores[i].contains("#")) temp *= (-1);
+
+            System.out.println("temp# = "+temp);
+
+            answer += temp;
+        }
 
         return answer;
     }
