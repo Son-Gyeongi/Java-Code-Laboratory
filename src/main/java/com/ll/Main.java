@@ -5,7 +5,10 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        String dartResult = "1S2D*3T";
+//        String dartResult = "1S2D*3T";
+//        String dartResult = "10D10S0D";
+        String dartResult = "0D4S0D";
+//        String dartResult = "1D2S0T";
         System.out.println(s.solution(dartResult));
     }
 }
@@ -26,7 +29,8 @@ class Solution {
         int index = 0;
         for (int i=0;i<divide.length;i++) {
             if (divide[i].equals("S") || divide[i].equals("D") || divide[i].equals("T")) {
-                if (divide[i-1].equals("0") && divide[i-2].equals("1")) { // 점수가 10일 경우
+                // 처음 다트 던졌을 때 0일 경우 -> divide[i-1], divide[i-2] 인덱스 에러 난다. => 해결 i > 1 추가
+                if (i > 1 && divide[i-1].equals("0") && divide[i-2].equals("1")) { // 점수가 10일 경우
                     scores[index++] = divide[i-2] + divide[i-1] + divide[i];
                 } else scores[index++] = divide[i-1] + divide[i];
             }
@@ -35,9 +39,9 @@ class Solution {
         System.out.println(Arrays.toString(scores));
 
         // 2. 점수에 * 있는지 확인하기
-        index = 0;
         for (int i=0;i<divide.length;i++) {
-            // TODO 첫번째 점수에서 *이 없으면 index 가 안 올라감
+
+            // 마지막 다트의 경우
             if (i > 5 && divide[i].equals("*")) {
                 scores[2] += "*";
                 scores[1] += "*";
@@ -53,7 +57,8 @@ class Solution {
 
         // 3. 점수에 # 있는지 확인하기
         for (int i=0;i<divide.length;i++) {
-            // TODO 첫번째 점수에서 #이 없으면 index 가 안 올라감
+
+            // 마지막 다트의 경우
             if (i > 5 && divide[i].equals("#")) {
                 scores[2] += "#";
             } else if (i > 2 && divide[i].equals("#")) {
