@@ -1,56 +1,60 @@
 package com.ll;
 
+import java.util.Arrays;
+
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-//        String str = "banana";
-        String str = "abracadabra";
-//        String str = "aaabbaccccabba";
-        System.out.println(s.solution(str));
+        String str = "z";
+        String skip = "abcdefghij";
+        System.out.println(s.solution(str, skip, 20));
     }
 }
 
 class Solution {
-    public int solution(String s) {
-        int answer = 0;
+    public String solution(String s, String skip, int index) {
+        String answer = "";
+        String[] alphabet = {"a", "b", "c", "d", "e", "f", "g", "h", "i",
+                "j", "k", "l", "m", "n", "o", "p", "q", "r",
+                "s", "t", "u", "v", "w", "x", "y", "z"}; // 26개
+        String[] sArr = s.split("");
+        String[] skipArr = skip.split("");
 
-        // '첫 글자 x' 와 'x가 아닌 글자'를 센다.
-        // '첫 글자 x 개수'와 'x가 아닌 글자 개수'가 같으면 분리
-
-        answer = divide(s);
-
-        return answer;
-    }
-
-    public int divide(String s) {
-        if (s.equals("")) return 0;
-        else if (s.length() == 1) return 1;
-
-        int sum = 1;
-        String[] strArr = s.split("");
-
-        // 1. 첫 글자와 개수 찾기
-        String firstStr = ""; // 첫 문자열 x
-        int firstCount = 0; // 첫 문자열 x 개수
-        for (int i=0;i<strArr.length;i++) {
-            firstStr = strArr[0];
-
-            if (!strArr[0].equals(strArr[i])) break;
-
-            firstCount++;
-        }
-
-        // 2. 첫 글자 이후에 나오는 글자와 비교하기
-        int diffCount = 0;
-        for (int i=firstCount;i<strArr.length;i++) {
-            if (!firstStr.equals(strArr[i])) diffCount++;
-            else firstCount++;
-
-            if (firstCount == diffCount) {
-                break;
+        // skip되는 알파벳 빼고 저장하기
+        String[] keepAlphabet = new String[26 - skip.length()];
+        int keepIdx = 0;
+        for (int i=0;i<alphabet.length;i++) {
+            boolean check = false; // skip 존재하는지 확인
+            for (int j=0;j<skipArr.length;j++) {
+                if (alphabet[i].equals(skipArr[j])) {
+                    check = true;
+                    break;
+                }
             }
+
+            if (!check) {
+                keepAlphabet[keepIdx++] = alphabet[i];
+            }
+
+            if (keepIdx == keepAlphabet.length) break;
         }
 
-        return sum + divide(s.substring(firstCount+diffCount));
+        System.out.println(Arrays.toString(keepAlphabet));
+
+        for (int i=0;i<sArr.length;i++) {
+            // 먼저 sArr 요소랑 맞는 keepAlphabet 인덱스 찾기
+            int idx = 0;
+            for (int j=0;j<keepAlphabet.length;j++) {
+                if (sArr[i].equals(keepAlphabet[j])) {
+                    idx = j;
+                    break;
+                }
+            }
+
+            int standard = (idx+index) % keepAlphabet.length;
+            sArr[i] = keepAlphabet[standard];
+        }
+
+        return String.join("", sArr);
     }
 }
