@@ -1,60 +1,50 @@
 package com.ll;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        String str = "z";
-        String skip = "abcdefghij";
-        System.out.println(s.solution(str, skip, 20));
+        String[] keymap = {"AA"};
+        String[] targets = {"B"};
+        System.out.println(Arrays.toString(s.solution(keymap, targets)));
     }
 }
 
 class Solution {
-    public String solution(String s, String skip, int index) {
-        String answer = "";
-        String[] alphabet = {"a", "b", "c", "d", "e", "f", "g", "h", "i",
-                "j", "k", "l", "m", "n", "o", "p", "q", "r",
-                "s", "t", "u", "v", "w", "x", "y", "z"}; // 26개
-        String[] sArr = s.split("");
-        String[] skipArr = skip.split("");
+    public int[] solution(String[] keymap, String[] targets) {
+        int[] answer = new int[targets.length];
+        Map<String, Integer> map = new HashMap<>();
 
-        // skip되는 알파벳 빼고 저장하기
-        String[] keepAlphabet = new String[26 - skip.length()];
-        int keepIdx = 0;
-        for (int i=0;i<alphabet.length;i++) {
-            boolean check = false; // skip 존재하는지 확인
-            for (int j=0;j<skipArr.length;j++) {
-                if (alphabet[i].equals(skipArr[j])) {
-                    check = true;
-                    break;
-                }
+        // 1. Map 에 keymap 각 요소 누르는 값 넣기
+        for (int i=0;i<keymap.length;i++) {
+            String[] key = keymap[i].split("");
+
+            for (int j=0;j<key.length;j++) {
+                int value = map.getOrDefault(key[j], j+1);
+
+                map.put(key[j], value > j+1 ? j+1 : value);
             }
-
-            if (!check) {
-                keepAlphabet[keepIdx++] = alphabet[i];
-            }
-
-            if (keepIdx == keepAlphabet.length) break;
         }
 
-        System.out.println(Arrays.toString(keepAlphabet));
+        // 2. map에 맞게 targets 계산하기
+        for (int i=0;i<targets.length;i++) {
+            String[] target = targets[i].split("");
 
-        for (int i=0;i<sArr.length;i++) {
-            // 먼저 sArr 요소랑 맞는 keepAlphabet 인덱스 찾기
-            int idx = 0;
-            for (int j=0;j<keepAlphabet.length;j++) {
-                if (sArr[i].equals(keepAlphabet[j])) {
-                    idx = j;
+            for (int j=0;j<target.length;j++) {
+                if (map.get(target[j]) == null) {
+                    answer[i] = -1;
                     break;
                 }
-            }
 
-            int standard = (idx+index) % keepAlphabet.length;
-            sArr[i] = keepAlphabet[standard];
+                int value = map.get(target[j]);
+
+                answer[i] += value;
+            }
         }
 
-        return String.join("", sArr);
+        return answer;
     }
 }
