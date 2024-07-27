@@ -5,58 +5,50 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-//        int[] lost = {2, 4};
-        int[] lost = {28, 30};
-//        int[] reserve = {1, 3, 5};
-        int[] reserve = {27, 29};
-        System.out.println(s.solution(30, lost, reserve));
+//        int[] ingredient = {2, 1, 1, 2, 3, 1, 2, 3, 1};
+//        int[] ingredient = {1, 3, 2, 1, 2, 1, 3, 1, 2};
+        int[] ingredient = {1, 2, 3, 2, 1, 2, 3, 1, 1};
+        System.out.println(s.solution(ingredient));
     }
 }
 
 class Solution {
-    public int solution(int n, int[] lost, int[] reserve) {
+    public int solution(int[] ingredient) {
         int answer = 0;
 
-        Arrays.sort(lost);
-        Arrays.sort(reserve);
+        // 빵 - 1, 야채 - 2, 고기 - 3
+        // 1-2-3-1 이 일심동체로 햄버거 한개
 
-        // 1. 모든 n 학생 수를 Map에 넣기
-        Map<Integer, Integer> map = new HashMap<>();
-        for (int i = 1; i <= n; i++) {
-            map.put(i, 1);
+        if (ingredient.length < 4) return 0; // 13, 15, 16, 17 테스트 케이스
+
+        StringBuilder sb = new StringBuilder();
+        for (int i : ingredient) {
+            sb.append(i);
         }
 
-        // 2. lost 학생들은 0 값을 넣기
-        for (int i=0;i<lost.length;i++) {
-            map.put(lost[i], 0);
-        }
+        System.out.println("sb  =  "+sb);
 
-        // 3. reserve를 확인해서 lost 학생들에게 옷을 빌려줄 수 있는지 확인
-        // 자기자신이 체육복 안 가져왔는지 확인
-        for (int i=0;i<reserve.length;i++) {
-            for (int j=0;j<lost.length;j++) {
-                if (reserve[i] == lost[j]) {
-                    map.put(lost[j], 1);
-                    reserve[i] = -1;
-                }
+        for (int i=0;3<sb.length();) {
+            if (sb.charAt(i) == '1'
+            && sb.charAt(i+1) == '2'
+            && sb.charAt(i+2) == '3'
+            && sb.charAt(i+3) == '1') {
+                System.out.println("sb.charAt(i)  =  "+sb.charAt(i));
+                System.out.println("sb.charAt(i+1)  =  "+sb.charAt(i+1));
+                System.out.println("sb.charAt(i+2)  =  "+sb.charAt(i+2));
+                System.out.println("sb.charAt(i+3)  =  "+sb.charAt(i+3));
+
+                sb.replace(i, i+4, "");
+                i--;
+                answer++;
+                continue;
             }
-        }
 
-        // 다른 사람 체육복 빌리기
-        for (int i=0;i<reserve.length;i++) {
-            for (int j=0;j<lost.length;j++) {
-                if (reserve[i] == (lost[j] - 1) || reserve[i] == (lost[j] + 1)) {
-                    map.put(lost[j], 1);
-                    reserve[i] = -1; // 여벌 옷 빌려준 사람 제외
-                    lost[j] = -5; // 여벌 옷 빌린 사람 제외
-                }
-            }
-        }
+            i++;
 
-        // 4. Map을 확인해서 1인 학생의 수 구하기 (체육복이 있는 학생 수 세기)
-        for (int i=1;i<=map.size();i++) {
-            if (map.get(i) == 1) answer++;
+            if (i == ingredient.length-3) break;
         }
+        System.out.println("sb  =  "+sb);
 
         return answer;
     }
