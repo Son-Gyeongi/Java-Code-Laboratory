@@ -5,50 +5,80 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-//        int[] ingredient = {2, 1, 1, 2, 3, 1, 2, 3, 1};
-//        int[] ingredient = {1, 3, 2, 1, 2, 1, 3, 1, 2};
-        int[] ingredient = {1, 2, 3, 2, 1, 2, 3, 1, 1};
-        System.out.println(s.solution(ingredient));
+        int[] numbers = {1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5};
+        System.out.println(s.solution(numbers, "right"));
     }
 }
 
 class Solution {
-    public int solution(int[] ingredient) {
-        int answer = 0;
+    public String solution(int[] numbers, String hand) {
+        String answer = "";
 
-        // 빵 - 1, 야채 - 2, 고기 - 3
-        // 1-2-3-1 이 일심동체로 햄버거 한개
+        // String[] left = {"*", "7", "4", "1"};
+        // String[] middle = {"0", "8", "5", "2"};
+        // String[] right = {"#", "9", "6", "3"};
+        String left = "*741";
+        String middle = "0852";
+        String right = "#963";
 
-        if (ingredient.length < 4) return 0; // 13, 15, 16, 17 테스트 케이스
+        int leftPoint = 0;
+        int rightPoint = 0;
 
-        StringBuilder sb = new StringBuilder();
-        for (int i : ingredient) {
-            sb.append(i);
-        }
+        for (int i=0;i<numbers.length;i++) {
+            switch(numbers[i]) {
+                case 1,4,7 :
+                    leftPoint = numbers[i];
+                    answer += "L";
+                    break;
+                case 3,6,9 :
+                    rightPoint = numbers[i];
+                    answer += "R";
+                    break;
+                case 2,5,8,0 :
+                    int middleIdx = middle.indexOf(String.valueOf(numbers[i]));
+                    int leftIdx = left.indexOf(String.valueOf(leftPoint)) == -1 ?
+                            middle.indexOf(String.valueOf(leftPoint))
+                            : left.indexOf(String.valueOf(leftPoint));
+                    int rightIdx = right.indexOf(String.valueOf(rightPoint)) == -1 ?
+                            middle.indexOf(String.valueOf(rightPoint))
+                            : right.indexOf(String.valueOf(rightPoint));
 
-        System.out.println("sb  =  "+sb);
+                    System.out.print("leftPoint = " + leftPoint + "     ");
+                    System.out.println("rightPoint = " + rightPoint);
+                    System.out.print("middleIdx = " + middleIdx + "     ");
+                    System.out.print("leftIdx = " + leftIdx + "     ");
+                    System.out.println("rightIdx = " + rightIdx);
 
-        for (int i=0;3<sb.length();) {
-            if (sb.charAt(i) == '1'
-            && sb.charAt(i+1) == '2'
-            && sb.charAt(i+2) == '3'
-            && sb.charAt(i+3) == '1') {
-                System.out.println("sb.charAt(i)  =  "+sb.charAt(i));
-                System.out.println("sb.charAt(i+1)  =  "+sb.charAt(i+1));
-                System.out.println("sb.charAt(i+2)  =  "+sb.charAt(i+2));
-                System.out.println("sb.charAt(i+3)  =  "+sb.charAt(i+3));
-
-                sb.replace(i, i+4, "");
-                i--;
-                answer++;
-                continue;
+                    if (Math.abs(middleIdx - leftIdx)
+                            == Math.abs(middleIdx - rightIdx)) {
+                        if (hand == "right") {
+                            rightPoint = numbers[i];
+                            answer += "R";
+                            System.out.println("오른손잡이");
+                            break;
+                        } else {
+                            leftPoint = numbers[i];
+                            answer += "L";
+                            System.out.println("왼손잡이");
+                            break;
+                        }
+                    } else if (Math.abs(middleIdx - leftIdx)
+                            < Math.abs(middleIdx - rightIdx)) {
+                        // 왼손에서 이동
+                        leftPoint = numbers[i];
+                        answer += "L";
+                        System.out.println("왼손에서 이동");
+                        break;
+                    } else if (Math.abs(middleIdx - leftIdx)
+                            > Math.abs(middleIdx - rightIdx)) {
+                        // 오른손에서 이동
+                        rightPoint = numbers[i];
+                        answer += "R";
+                        System.out.println("오른손에서 이동");
+                        break;
+                    }
             }
-
-            i++;
-
-            if (i == ingredient.length-3) break;
         }
-        System.out.println("sb  =  "+sb);
 
         return answer;
     }
