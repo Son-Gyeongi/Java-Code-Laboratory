@@ -5,78 +5,94 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        int[] numbers = {1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5};
-        System.out.println(s.solution(numbers, "right"));
+        String[] park = {"OOOOO", "OOOOO", "OOSOO", "OOOOO", "OOOOO"};
+        String[] routes = {"E 3", "W 3", "S 3", "N 3", "E 2", "E 1", "W 4", "W 1", "S 2", "S 1", "N 4", "N 1"};
+        System.out.println(Arrays.toString(s.solution(park, routes)));
     }
 }
 
 class Solution {
-    public String solution(int[] numbers, String hand) {
-        String answer = "";
+    public int[] solution(String[] park, String[] routes) {
+        int[] answer = new int[2];
+        String[][] parkDupl = new String[park.length][park[0].length()];
 
-        // String[] left = {"*", "7", "4", "1"};
-        // String[] middle = {"0", "8", "5", "2"};
-        // String[] right = {"#", "9", "6", "3"};
-        String left = "*741";
-        String middle = "0852";
-        String right = "#963";
+        // 시작 지점 찾기
+        for (int i=0;i<park.length;i++) {
+            for (int j=0;j<park[i].length();j++) {
+                parkDupl[i][j] = park[i].charAt(j) + "";
 
-        int leftPoint = 0;
-        int rightPoint = 0;
+                if (park[i].charAt(j) == 'S') {
+                    answer[0] = i;
+                    answer[1] = j;
 
-        for (int i=0;i<numbers.length;i++) {
-            switch(numbers[i]) {
-                case 1,4,7 :
-                    leftPoint = numbers[i];
-                    answer += "L";
-                    break;
-                case 3,6,9 :
-                    rightPoint = numbers[i];
-                    answer += "R";
-                    break;
-                case 2,5,8,0 :
-                    int middleIdx = middle.indexOf(String.valueOf(numbers[i]));
-                    int leftIdx = left.indexOf(String.valueOf(leftPoint)) == -1 ?
-                            middle.indexOf(String.valueOf(leftPoint))
-                            : left.indexOf(String.valueOf(leftPoint));
-                    int rightIdx = right.indexOf(String.valueOf(rightPoint)) == -1 ?
-                            middle.indexOf(String.valueOf(rightPoint))
-                            : right.indexOf(String.valueOf(rightPoint));
+                    parkDupl[i][j] = "O";
+                }
+            }
+        }
 
-                    System.out.print("leftPoint = " + leftPoint + "     ");
-                    System.out.println("rightPoint = " + rightPoint);
-                    System.out.print("middleIdx = " + middleIdx + "     ");
-                    System.out.print("leftIdx = " + leftIdx + "     ");
-                    System.out.println("rightIdx = " + rightIdx);
+        // routes에 맞게 이동
+        for (int i=0;i<routes.length;i++) {
+            String direction = routes[i].split(" ")[0];
+            String number = routes[i].split(" ")[1];
+            int addDistance = Integer.parseInt(number);
 
-                    if (Math.abs(middleIdx - leftIdx)
-                            == Math.abs(middleIdx - rightIdx)) {
-                        if (hand == "right") {
-                            rightPoint = numbers[i];
-                            answer += "R";
-                            System.out.println("오른손잡이");
-                            break;
-                        } else {
-                            leftPoint = numbers[i];
-                            answer += "L";
-                            System.out.println("왼손잡이");
+            boolean isX = false;
+            if (direction.equals("E")) {
+                if (answer[1] + addDistance < parkDupl[0].length) {
+                    // 목적지 지점 가기 전에 "X"가 있을 경우
+                    for (int j=answer[1]+1;j<=(answer[1] + addDistance);j++) {
+                        if (parkDupl[answer[0]][j].equals("X")) {
+                            isX = true;
                             break;
                         }
-                    } else if (Math.abs(middleIdx - leftIdx)
-                            < Math.abs(middleIdx - rightIdx)) {
-                        // 왼손에서 이동
-                        leftPoint = numbers[i];
-                        answer += "L";
-                        System.out.println("왼손에서 이동");
-                        break;
-                    } else if (Math.abs(middleIdx - leftIdx)
-                            > Math.abs(middleIdx - rightIdx)) {
-                        // 오른손에서 이동
-                        rightPoint = numbers[i];
-                        answer += "R";
-                        System.out.println("오른손에서 이동");
-                        break;
                     }
+
+                    if (isX) continue;
+
+                    answer [1] += addDistance;
+                }
+            } else if (direction.equals("W")) {
+                if (answer[1] - addDistance >= 0) {
+                    // 목적지 지점 가기 전에 "X"가 있을 경우
+                    for (int j=answer[1]-1;j>=(answer[1] - addDistance);j--) {
+                        if (parkDupl[answer[0]][j].equals("X")) {
+                            isX = true;
+                            break;
+                        }
+                    }
+
+                    if (isX) continue;
+
+                    answer [1] -= addDistance;
+                }
+            } else if (direction.equals("S")) {
+                if (answer[0] + addDistance < parkDupl.length) {
+                    // 목적지 지점 가기 전에 "X"가 있을 경우
+                    for (int j=answer[0]+1;j<=(answer[0] + addDistance);j++) {
+                        if (parkDupl[j][answer[1]].equals("X")) {
+                            isX = true;
+                            break;
+                        }
+                    }
+
+                    if (isX) continue;
+
+                    answer [0] += addDistance;
+                }
+            } else if (direction.equals("N")) {
+                if (answer[0] - addDistance >= 0) {
+                    // 목적지 지점 가기 전에 "X"가 있을 경우
+                    for (int j=answer[0]-1;j>=(answer[0] - addDistance);j--) {
+                        if (parkDupl[j][answer[1]].equals("X")) {
+                            isX = true;
+                            break;
+                        }
+                    }
+
+                    if (isX) continue;
+
+                    answer [0] -= addDistance;
+                }
             }
         }
 
