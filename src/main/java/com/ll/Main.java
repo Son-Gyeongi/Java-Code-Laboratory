@@ -5,10 +5,10 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        String[] friends = {"muzi", "ryan", "frodo", "neo"};
-        String[] gifts = {"muzi frodo", "muzi frodo", "ryan muzi", "ryan muzi", "ryan muzi", "frodo muzi", "frodo ryan", "neo muzi"};
-//        String[] friends = {"joy", "brad", "alessandro", "conan", "david"};
-//        String[] gifts = {"alessandro brad", "alessandro joy", "alessandro conan", "david alessandro", "alessandro david"};
+//        String[] friends = {"muzi", "ryan", "frodo", "neo"};
+//        String[] gifts = {"muzi frodo", "muzi frodo", "ryan muzi", "ryan muzi", "ryan muzi", "frodo muzi", "frodo ryan", "neo muzi"};
+        String[] friends = {"joy", "brad", "alessandro", "conan", "david"};
+        String[] gifts = {"alessandro brad", "alessandro joy", "alessandro conan", "david alessandro", "alessandro david"};
 //        String[] friends = {"a", "b", "c"};
 //        String[] gifts = {"a b", "b a", "c a", "a c", "a c", "c a"};
         System.out.println(s.solution(friends, gifts));
@@ -49,7 +49,55 @@ class Solution {
         }
         System.out.println("giftPoint = " + giftPoint);
 
+        for (int i=0;i < friends.length-1;i++) {
+            String a = friends[i];
 
+            for (int j=i+1;j< friends.length;j++) {
+                String b = friends[j];
+
+                if (a.equals(b)) continue;
+
+                if (giveGiftList.containsKey(a)) {
+                    if (giveGiftList.get(a).containsKey(b)) {
+                        // a가 b에게 선물을 준 경우
+                        if (!gaveMoreGifts(giveGiftList, a, b, nextMonthGifts)) {
+                            // a, b 선물을 똑같이 보냈다면
+                            giftPointCal(giftPoint, a, b, nextMonthGifts);
+                        }
+                    } else if (giveGiftList.containsKey(b)) {
+                        if (giveGiftList.get(b).containsKey(a)) {
+                            // b가 a에게 선물을 준 경우
+                            if (!gaveMoreGifts(giveGiftList, a, b, nextMonthGifts)) {
+                                // a, b 선물을 똑같이 보냈다면
+                                giftPointCal(giftPoint, a, b, nextMonthGifts);
+                            }
+                        } else {
+                            // a, b 서로 선물을 주지 않은 경우
+                            giftPointCal(giftPoint, a, b, nextMonthGifts);
+                        }
+                    } else {
+                        // a, b 서로 선물을 주지 않은 경우
+                        giftPointCal(giftPoint, a, b, nextMonthGifts);
+                    }
+
+                } else if (giveGiftList.containsKey(b)) {
+                    // b가 a에게 선물을 준 경우
+                    if (giveGiftList.get(b).containsKey(a)) {
+                        // a는 b에게 선물을 주지 않았다.
+                        if (!gaveMoreGifts(giveGiftList, a, b, nextMonthGifts)) {
+                            // a, b 선물을 똑같이 보냈다면
+                            giftPointCal(giftPoint, a, b, nextMonthGifts);
+                        }
+                    } else {
+                        // a, b 서로 선물을 주지 않은 경우
+                        giftPointCal(giftPoint, a, b, nextMonthGifts);
+                    }
+                } else {
+                    // a, b 서로 선물을 주지 않은 경우
+                    giftPointCal(giftPoint, a, b, nextMonthGifts);
+                }
+            }
+        }
 
         System.out.println("nextMonthGifts = " + nextMonthGifts);
 
@@ -61,17 +109,16 @@ class Solution {
         return answer;
     }
 
-    // 많이 선물한 사람이 다음달에 선물 한 개 더 받음
-    public void gaveMoreGifts(String person, Map<String, Integer> nextMonthGifts) {
-        System.out.println("gaveMoreGifts = "+person);
-        nextMonthGifts.put(person, nextMonthGifts.getOrDefault(person, 0) + 1);
-    }
-    public void gaveMoreGifts(Map<String, Map<String, Integer>> giveGiftList, String A, String B, Map<String, Integer> nextMonthGifts) {
+    public boolean gaveMoreGifts(Map<String, Map<String, Integer>> giveGiftList, String A, String B, Map<String, Integer> nextMonthGifts) {
         // 선물 준 개수
         int giveA = giveGiftList.containsKey(A) ? giveGiftList.get(A).getOrDefault(B, 0) : 0;
         int giveB = giveGiftList.containsKey(B) ? giveGiftList.get(B).getOrDefault(A, 0) : 0;
 
         if (giveA > giveB) nextMonthGifts.put(A, nextMonthGifts.getOrDefault(A, 0) + 1);
+        else if (giveA < giveB) nextMonthGifts.put(B, nextMonthGifts.getOrDefault(B, 0) + 1);
+        else return false; // giveA == giveB
+
+        return true;
     }
 
     // 선물 지수 계산
