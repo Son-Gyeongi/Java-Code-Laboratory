@@ -18,18 +18,16 @@ class Solution {
         for (int x=0;x<arr1.length;x++) { // arr1의 행
             int arr1Point = 0;
 
-            for (int i=0;i<arr2.length;i++) { // arr2의 열
+            for (int i=0;i<arr2[0].length;i++) { // arr2의 열
                 int j = 0; // arr2의 행
 
                 for (int y=0;y<arr1[0].length;y++) { // arr1의 열
-                    if (j >= arr2.length || i >= arr2[0].length) break;
+                    if (i >= arr2[0].length) break;
                     arr1Point = arr1[x][y];
                     answer[x][i] += (arr1Point * arr2[j][i]);
-                    System.out.println("answer["+x+"]["+i+"] += ("+arr1Point+" * "+"arr2["+j+"]["+i+"])");
                     j++;
                 }
             }
-            System.out.println();
         }
 
         return answer;
