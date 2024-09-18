@@ -5,37 +5,31 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Solution s = new Solution();
-        String[][] clothes = {{"yellow_hat", "headgear"}, {"blue_sunglasses", "eyewear"}, {"green_turban", "headgear"}};
-        System.out.println(s.solution(clothes));
+        int[] citations = {3, 0, 6, 1, 5};
+        System.out.println(s.solution(citations));
     }
 }
 
 class Solution {
-    public int solution(String[][] clothes) {
+    public int solution(int[] citations) {
         int answer = 0;
 
-        // 각 의상 종류에 맞는 의상 이름 저장하기
-        Map<String, List<String>> map = new HashMap<>();
-        for (int i=0;i<clothes.length;i++) {
-            map.putIfAbsent(clothes[i][1], new ArrayList<>());
+        // citations를 내림차순으로 정렬하고 인용횟수 0번을 제외하고 count해서 같은지 확인 그리고 같으면 반환
+        int[] reverseCitations = Arrays.stream(citations)
+                .boxed()
+                .sorted(Comparator.reverseOrder())
+                .mapToInt(Integer::intValue).toArray();
 
-            map.get(clothes[i][1]).add(clothes[i][0]);
+        int count = 0;
+        for (int i = 0; i < reverseCitations.length; i++) {
+            int reverseCitation = reverseCitations[i];
+
+            if (reverseCitation <= count) return count;
+
+            count++;
         }
 
-        // 그리고 조합 여러개 (의상 종류가 2개 이상일 때)
-        int[] array = new int[map.size()];
-        int idx = 0;
-        for (String key : map.keySet()) {
-            array[idx++] = map.get(key).size(); // 의상 종류에 옷 개수
-        }
-
-        // n차식 계수의 합
-        int mul = 1;
-        for (int i=0;i<array.length;i++) {
-            mul *= 1+array[i];
-        }
-
-        answer += (mul-1);
+        if (count == citations.length) answer = count;
 
         return answer;
     }
